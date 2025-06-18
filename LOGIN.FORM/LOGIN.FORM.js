@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-const FormContainer = styled.div`
+const FormContainer = styled.div `
   background-color: rgba(30, 33, 36, 0.95);
   padding: 2rem;
   border-radius: 10px;
@@ -11,33 +11,33 @@ const FormContainer = styled.div`
   margin: 1rem;
 `;
 
-const Title = styled.h1`
+const Title = styled.h1 `
   color: white;
   font-size: 1.5rem;
   text-align: center;
   margin-bottom: 1.5rem;
 `;
 
-const Form = styled.form`
+const Form = styled.form `
   display: flex;
   flex-direction: column;
   gap: 1rem;
 `;
 
-const InputGroup = styled.div`
+const InputGroup = styled.div `
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 `;
 
-const Label = styled.label`
+const Label = styled.label `
   color: #b9bbbe;
   font-size: 0.75rem;
   font-weight: 600;
   text-transform: uppercase;
 `;
 
-const Input = styled.input`
+const Input = styled.input `
   padding: 0.75rem;
   background-color: #40444b;
   border: 1px solid transparent;
@@ -52,7 +52,7 @@ const Input = styled.input`
   }
 `;
 
-const RememberMe = styled.div`
+const RememberMe = styled.div `
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -60,7 +60,7 @@ const RememberMe = styled.div`
   font-size: 0.875rem;
 `;
 
-const LoginButton = styled.button`
+const LoginButton = styled.button `
   background-color: #5865f2;
   color: white;
   padding: 0.75rem;
@@ -76,7 +76,7 @@ const LoginButton = styled.button`
   }
 `;
 
-const ForgotPassword = styled.a`
+const ForgotPassword = styled.a `
   color: #00b0f4;
   font-size: 0.875rem;
   text-decoration: none;
@@ -87,7 +87,7 @@ const ForgotPassword = styled.a`
   }
 `;
 
-const SignUpText = styled.p`
+const SignUpText = styled.p `
   color: #b9bbbe;
   font-size: 0.875rem;
   text-align: center;
@@ -103,50 +103,75 @@ const SignUpText = styled.p`
   }
 `;
 const LoginForm = () => {
-  const [formData, setFormData] = useState({
-    username: '',
-    password: '',
-    rememberMe: false
-  });
+    const [formData, setFormData] = useState({
+        username: '',
+        password: '',
+        rememberMe: false
+    })
+};
 
-  const handleChange = (e) => {
+const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData(prev => ({
-      ...prev,
-      [name]: type === 'checkbox' ? checked : value
+        ...prev,
+        [name]: type === 'checkbox' ? checked : value
     }));
-  };
+};
 
-  const handleSubmit = (e) => {
+const handleSubmit = (e) => {
     e.preventDefault();
     console.log('Form submitted:', formData);
-  };
+};
 
-  return (
-    <FormContainer>
+return ( <
+    FormContainer >
+    <
+    Title > Login < /Title> <
+    Form onSubmit = { handleSubmit } >
+    <
+    InputGroup >
+    <
+    Label htmlFor = "username" > Username < /Label> <
+    Input type = "text"
+    id = "username"
+    name = "username"
+    value = { formData.username }
+    onChange = { handleChange }
+    required /
+    >
+    <
+    /InputGroup>
 
-      <Title>Login</Title>
-      <Form onSubmit={handleSubmit}>
-        <InputGroup>
-          <Label htmlFor="username">Username</Label>
-          <Input
-            type="text"
-            id="username"
-            name="username"
-            value={formData.username}
-            onChange={handleChange}
-            required
-          />
-        </InputGroup>
-
-        <InputGroup>
-          <Label htmlFor="password">Password</Label>
-          <Input
-            type="password"
-            id="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-           required
-          />
-        </InputGroup> 
+    <
+    InputGroup >
+    <
+    Label htmlFor = "password" > Password < /Label> <
+    Input type = "password"
+    id = "password"
+    name = "password"
+    value = { formData.password }
+    onChange = { handleChange }
+    required /
+    >
+    <
+    /InputGroup>  <
+    RememberMe >
+    <
+    imput type = "checkbox"
+    id = "RememberMe"
+    name = "RememverMe"
+    checked = { formData.rememberMe }
+    onChange = { handleChange }
+    /> <
+    label htmlFor = "rememberMe" > RememberMe < /label> < /
+    RememberMe > <
+    LoginButton type = "submit" > LOGIN < /LoginButton> <
+    ForgotPassword hreft = "#" > < /ForgotPassword> Forgot your password ? </ForgotPassword >
+    <
+    /Form>  <
+    SingUpText >
+    New here ? < a hreft = "#" > Sing Up < /a>  </SingUpText >
+    <
+    /FormContainer>
+);
+export default LoginForm;
