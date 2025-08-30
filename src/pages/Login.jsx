@@ -16,3 +16,5 @@ export default function Login() {
   };
   return (
     <form onSubmit={onSubmit} className="card space-y-4 max-w-md mx-auto"></form> )
+    <h2 className="text-xl font-semibold">Ingresar</h2>;
+      {err && <p className="text-red-600">{err}</p>}
