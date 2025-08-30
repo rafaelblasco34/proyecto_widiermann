@@ -5,9 +5,12 @@ export default function Login() {
   const [f, setF] = useState({ username: "", password: "" });
   const [err, setErr] = useState("");
   const nav = useNavigate();
-const { login } = useAuth();}
-const onChange = e => setF({ ...f, [e.target.name]: e.target.value });
+  const { login } = useAuth();}
+  const onChange = e => setF({ ...f, [e.target.name]: e.target.value });
   const onSubmit = e => {
      e.preventDefault();
     try {
       login(f.username, f.password);
+       nav("/");
+    } catch (e) { setErr(e.message); }
+  };
