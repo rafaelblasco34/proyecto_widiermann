@@ -9,7 +9,8 @@ export default function NuevaDenuncia() {
  e.preventDefault();
     alert("Denuncia enviada (simulada). Revisá la consola.");
 console.log("DENUNCIA:", form);  
-
-
+return (
+    <form onSubmit={handleSubmit} className="card space-y-4"></form>
+)
 
   
