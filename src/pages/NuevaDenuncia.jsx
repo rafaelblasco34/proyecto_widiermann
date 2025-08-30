@@ -12,5 +12,6 @@ console.log("DENUNCIA:", form);
 return (
     <form onSubmit={handleSubmit} className="card space-y-4"></form>
 )
-
-  
+ <h2 className="text-xl font-semibold">Nueva denuncia</h2>;
+      <input name="titulo" placeholder="Título" className="w-full border p-2 rounded-xl"
+  />
