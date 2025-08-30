@@ -14,3 +14,5 @@ export default function Login() {
        nav("/");
     } catch (e) { setErr(e.message); }
   };
+  return (
+    <form onSubmit={onSubmit} className="card space-y-4 max-w-md mx-auto"></form> )
