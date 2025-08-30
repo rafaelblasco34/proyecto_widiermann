@@ -16,3 +16,4 @@ return (
       <input name="titulo" placeholder="Título" className="w-full border p-2 rounded-xl"
   />value={form.titulo} onChange={handleChange} required />;
       <textarea name="descripcion" placeholder="Descripción" className="w-full border p-2 rounded-xl h-32" />
+      
