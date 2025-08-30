@@ -5,4 +5,10 @@ export default function NuevaDenuncia() {
 }
  const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value });
   const handleSubmit = e => { 
-    
+  }
+ e.preventDefault();
+    alert("Denuncia enviada (simulada). Revisá la consola.");
+
+
+
+  
