@@ -8,4 +8,6 @@ export default function Login() {
 const { login } = useAuth();}
 const onChange = e => setF({ ...f, [e.target.name]: e.target.value });
   const onSubmit = e => {
-    
+     e.preventDefault();
+    try {
+      login(f.username, f.password);
