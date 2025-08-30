@@ -6,3 +6,6 @@ export default function Login() {
   const [err, setErr] = useState("");
   const nav = useNavigate();
 const { login } = useAuth();}
+const onChange = e => setF({ ...f, [e.target.name]: e.target.value });
+  const onSubmit = e => {
+    
