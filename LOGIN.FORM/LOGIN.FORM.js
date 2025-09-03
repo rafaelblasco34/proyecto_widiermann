@@ -107,71 +107,70 @@ const LoginForm = () => {
         username: '',
         password: '',
         rememberMe: false
-    })
+    });
+
+    const handleChange = (e) => {
+        const { name, value, type, checked } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: type === 'checkbox' ? checked : value
+        }));
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log('Form submitted:', formData);
+    };
+
+    return (
+        <FormContainer>
+            <Title>Login</Title>
+            <Form onSubmit={handleSubmit}>
+                <InputGroup>
+                    <Label htmlFor="username">Username</Label>
+                    <Input 
+                        type="text"
+                        id="username"
+                        name="username"
+                        value={formData.username}
+                        onChange={handleChange}
+                        required 
+                    />
+                </InputGroup>
+
+                <InputGroup>
+                    <Label htmlFor="password">Password</Label>
+                    <Input 
+                        type="password"
+                        id="password"
+                        name="password"
+                        value={formData.password}
+                        onChange={handleChange}
+                        required 
+                    />
+                </InputGroup>
+
+                <RememberMe>
+                    <input 
+                        type="checkbox"
+                        id="rememberMe"
+                        name="rememberMe"
+                        checked={formData.rememberMe}
+                        onChange={handleChange}
+                    />
+                    <label htmlFor="rememberMe">Remember Me</label>
+                </RememberMe>
+
+                <LoginButton type="submit">LOGIN</LoginButton>
+                
+                <ForgotPassword href="#">Forgot your password?</ForgotPassword>
+            </Form>
+            
+            <SignUpText>
+                New here? <a href="#">Sign Up</a>
+            </SignUpText>
+        </FormContainer>
+    );
 };
 
-const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setFormData(prev => ({
-        ...prev,
-        [name]: type === 'checkbox' ? checked : value
-    }));
-};
-
-const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Form submitted:', formData);
-};
-
-return ( <
-    FormContainer >
-    <
-    Title > Login < /Title> <
-    Form onSubmit = { handleSubmit } >
-    <
-    InputGroup >
-    <
-    Label htmlFor = "username" > Username < /Label> <
-    Input type = "text"
-    id = "username"
-    name = "username"
-    value = { formData.username }
-    onChange = { handleChange }
-    required /
-    >
-    <
-    /InputGroup>
-
-    <
-    InputGroup >
-    <
-    Label htmlFor = "password" > Password < /Label> <
-    Input type = "password"
-    id = "password"
-    name = "password"
-    value = { formData.password }
-    onChange = { handleChange }
-    required /
-    >
-    <
-    /InputGroup>  <
-    RememberMe >
-    <
-    imput type = "checkbox"
-    id = "RememberMe"
-    name = "RememverMe"
-    checked = { formData.rememberMe }
-    onChange = { handleChange }
-    /> <
-    label htmlFor = "rememberMe" > RememberMe < /label> < /
-    RememberMe > <
-    LoginButton type = "submit" > LOGIN < /LoginButton> <
-    ForgotPassword hreft = "#" > < /ForgotPassword> Forgot your password ? </ForgotPassword >
-    <
-    /Form>  <
-    SingUpText >
-    New here ? < a hreft = "#" > Sing Up < /a>  </SingUpText >
-    <
-    /FormContainer>
-);
-export default LoginForm;
+export default LoginForm; 
