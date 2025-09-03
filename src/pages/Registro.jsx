@@ -104,3 +104,11 @@ export default function Registro() {
     </div>
   );
 }
+export default function Registro() {
+  return (
+    <section className="card max-w-md mx-auto">
+      <h2 className="text-xl font-semibold mb-2">Registro (demo)</h2>
+      <p>Esta pantalla simula un registro. Podés usar los usuarios de prueba del login.</p>
+    </section>
+  );
+}
