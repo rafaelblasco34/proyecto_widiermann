@@ -74,3 +74,15 @@ export default function Denuncias() {
     </div>
   );
 }
+import { Link } from "react-router-dom";
+export default function Denuncias() {
+  return (
+    <section className="card"></section>
+
+      <h2 className="text-xl font-semibold mb-2">Denuncias</h2>
+      <p className="mb-4">Creá una nueva denuncia o consultá el procedimiento.</p>
+      <Link to="/denuncias/nueva" className="btn btn-primary">Nueva denuncia</Link>
+
+     </section>
+  );
+}
