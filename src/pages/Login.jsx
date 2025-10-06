@@ -3,46 +3,50 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext.jsx";
 
 export default function Login() {
-  const [f, setF] = useState({ username: "", password: "" });
-  const [err, setErr] = useState("");
-  const nav = useNavigate();
+  const [form, setForm] = useState({ username: "", password: "" });
+  const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   const { login } = useAuth();
+}
 
-  const onChange = e => setF({ ...f, [e.target.name]: e.target.value });
-  
-  const onSubmit = e => {
-    e.preventDefault();
-    try {
-      login(f.username, f.password);
-      nav("/");
-    } catch (e) { 
-      setErr(e.message); 
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!form.username.trim()) {
+      newErrors.username = "El usuario es obligatorio";
     }
+
+    if (!form.password) {
+      newErrors.password = "La contraseña es obligatoria";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
-  return (
-    <div className="container-page">
-      <form onSubmit={onSubmit} className="card space-y-4 max-w-md mx-auto">
-        <h2 className="text-xl font-semibold">Ingresar</h2>
-        {err && <p className="text-red-600">{err}</p>}
-        <input 
-          name="username" 
-          placeholder="Usuario" 
-          className="w-full border p-2 rounded-xl"
-          value={f.username} 
-          onChange={onChange} 
-        />
-        <input 
-          type="password" 
-          name="password" 
-          placeholder="Contraseña" 
-          className="w-full border p-2 rounded-xl"
-          value={f.password} 
-          onChange={onChange} 
-        />
-        <button className="btn btn-primary w-full">Entrar</button>
-        <p className="text-sm opacity-70">Usuarios de prueba: <b>admin/1234</b>, <b>usuario/abcd</b></p>
-      </form>
-    </div>
-  );
-}
+  const handleChange = e => {
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
+    
+    if (errors[name]) {
+      setErrors({ ...errors, [name]: "" });
+    }
+  };
+  
+  const handleSubmit = async e => {
+    e.preventDefault();
+    
+    if (!validateForm()) return;
+
+    try {
+      setLoading(true);
+      setErrors({});
+      await login(form.username, form.password);
+      navigate("/");
+    } catch (error) { 
+      setErrors({ general: error.message });
+    } finally {
+      setLoading(false);
+    }
+  };
