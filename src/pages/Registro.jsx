@@ -103,8 +103,7 @@ export default function Registro() {
       </form>
     </div>
   );
-}
-export default function Registro() {
+}export default function Registro() {
   return (
     <section className="card max-w-md mx-auto">
       <h2 className="text-xl font-semibold mb-2">Registro (demo)</h2>
