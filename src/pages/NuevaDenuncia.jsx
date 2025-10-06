@@ -113,3 +113,203 @@ export default function NuevaDenuncia() {
       setLoading(false);
     }
   };
+
+    return (
+    <div className="container-page">
+      <form onSubmit={handleSubmit} className="card space-y-4 max-w-2xl mx-auto">
+        <h2 className="text-xl font-semibold">Nueva denuncia</h2>
+        
+        {errors.general && (
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+            {errors.general}
+          </div>
+        )}
+        
+        <div>
+          <input 
+            name="titulo" 
+            placeholder="Título de la denuncia" 
+            className={`w-full border p-2 rounded-xl ${errors.titulo ? 'border-red-500' : ''}`}
+            value={form.titulo} 
+            onChange={handleChange}
+            disabled={loading}
+            required 
+          />
+          {errors.titulo && <p className="text-red-600 text-sm mt-1">{errors.titulo}</p>}
+        </div>
+
+        <div>
+          <select
+            name="tipo"
+            className={`w-full border p-2 rounded-xl ${errors.tipo ? 'border-red-500' : ''}`}
+            value={form.tipo}
+            onChange={handleChange}
+            disabled={loading}
+            required
+          >
+            <option value="">Seleccionar tipo de denuncia</option>
+            <option value="robo">Robo</option>
+            <option value="vandalismo">Vandalismo</option>
+            <option value="ruidos">Ruidos molestos</option>
+            <option value="violencia">Violencia</option>
+            <option value="trafico">Tráfico</option>
+            <option value="otros">Otros</option>
+          </select>
+          {errors.tipo && <p className="text-red-600 text-sm mt-1">{errors.tipo}</p>}
+        </div>
+
+        <div>
+          <input 
+            name="ubicacion" 
+            placeholder="Ubicación del incidente (ej: Parque Central, Calle Principal)" 
+            className={`w-full border p-2 rounded-xl ${errors.ubicacion ? 'border-red-500' : ''}`}
+            value={form.ubicacion} 
+            onChange={handleChange}
+            disabled={loading}
+            required
+          />
+          {errors.ubicacion && <p className="text-red-600 text-sm mt-1">{errors.ubicacion}</p>}
+        </div>
+
+        <div>
+          <input 
+            name="direccion" 
+            placeholder="Dirección específica (opcional)" 
+            className="w-full border p-2 rounded-xl"
+            value={form.direccion} 
+            onChange={handleChange}
+            disabled={loading}
+          />
+        </div>
+
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <input 
+              name="lat" 
+              type="number" 
+              step="any"
+              placeholder="Latitud (opcional)" 
+              className="w-full border p-2 rounded-xl"
+              value={form.coordenadas.lat} 
+              onChange={(e) => setForm({...form, coordenadas: {...form.coordenadas, lat: e.target.value}})}
+              disabled={loading}
+            />
+          </div>
+          <div>
+            <input 
+              name="lng" 
+              type="number" 
+              step="any"
+              placeholder="Longitud (opcional)" 
+              className="w-full border p-2 rounded-xl"
+              value={form.coordenadas.lng} 
+              onChange={(e) => setForm({...form, coordenadas: {...form.coordenadas, lng: e.target.value}})}
+              disabled={loading}
+            />
+          </div>
+        </div>
+        
+        <div>
+          <textarea 
+            name="descripcion" 
+            placeholder="Descripción detallada del incidente" 
+            className={`w-full border p-2 rounded-xl h-32 ${errors.descripcion ? 'border-red-500' : ''}`}
+            value={form.descripcion} 
+            onChange={handleChange}
+            disabled={loading}
+            required
+          />
+          {errors.descripcion && <p className="text-red-600 text-sm mt-1">{errors.descripcion}</p>}
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Imágenes del incidente (máximo 5MB cada una)
+          </label>
+          <input 
+            type="file" 
+            multiple 
+            accept="image/*"
+            onChange={handleImagenChange}
+            disabled={loading}
+            className="w-full border p-2 rounded-xl"
+          />
+          
+          {imagenesSubiendo.length > 0 && (
+            <div className="mt-2">
+              <p className="text-sm text-blue-600">Subiendo imágenes...</p>
+              {imagenesSubiendo.map((nombre, index) => (
+                <p key={index} className="text-xs text-gray-500">• {nombre}</p>
+              ))}
+            </div>
+          )}
+
+          {imagenes.length > 0 && (
+            <div className="mt-4 grid grid-cols-2 gap-2">
+              {imagenes.map((imagen, index) => (
+                <div key={index} className="relative">
+                  <img 
+                    src={imagen.url} 
+                    alt={`Imagen ${index + 1}`}
+                    className="w-full h-24 object-cover rounded border"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => eliminarImagen(index)}
+                    className="absolute top-1 right-1 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs"
+                    disabled={loading}
+                  >
+                    ×
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div>
+          <select
+            name="comisaria"
+            className={`w-full border p-2 rounded-xl ${errors.comisaria ? 'border-red-500' : ''}`}
+            value={form.comisaria}
+            onChange={handleChange}
+            disabled={loading}
+            required
+          >
+            <option value="">Seleccionar comisaría</option>
+            <option value="central">Comisaría Central</option>
+            <option value="2da">Comisaría 2da</option>
+            <option value="3ra">Comisaría 3ra</option>
+            <option value="4ta">Comisaría 4ta</option>
+          </select>
+          {errors.comisaria && <p className="text-red-600 text-sm mt-1">{errors.comisaria}</p>}
+        </div>
+        
+        <div className="flex gap-4">
+          <button 
+            type="submit" 
+            className="btn btn-primary flex-1"
+            disabled={loading || imagenesSubiendo.length > 0}
+          >
+            {loading ? (
+              <>
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2 inline-block"></div>
+                Enviando...
+              </>
+            ) : (
+              "Enviar denuncia"
+            )}
+          </button>
+          <button 
+            type="button" 
+            onClick={() => navigate("/denuncias")} 
+            className="btn bg-gray-200 hover:bg-gray-300 text-gray-800"
+            disabled={loading}
+          >
+            Cancelar
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+
