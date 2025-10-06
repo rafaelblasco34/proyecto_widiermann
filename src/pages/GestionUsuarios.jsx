@@ -52,3 +52,49 @@ export default function GestionUsuarios() {
         const usuarioId = await crearUsuario(form);
         alert(Usuario creado exitosamente con ID: ${usuarioId});
       }
+       limpiarFormulario();
+      cargarUsuarios();
+    } catch (error) {
+      console.error("Error al guardar usuario:", error);
+      alert("Error al guardar el usuario");
+    }
+  };
+
+  const handleEditar = (usuario) => {
+    setUsuarioEditando(usuario);
+    setForm({
+      nombre: usuario.nombre || "",
+      email: usuario.email || "",
+      username: usuario.username || "",
+      password: "", // No mostrar contraseña existente
+      rol: usuario.rol || "usuario",
+      activo: usuario.activo !== false
+    });
+    setMostrarFormulario(true);
+  };
+
+  const handleEliminar = async (id) => {
+    if (window.confirm('¿Estás seguro de que quieres eliminar este usuario?')) {
+      try {
+        await eliminarUsuario(id);
+        alert('Usuario eliminado exitosamente');
+        cargarUsuarios();
+      } catch (error) {
+        console.error("Error al eliminar usuario:", error);
+        alert('Error al eliminar el usuario');
+      }
+    }
+  };
+
+  const limpiarFormulario = () => {
+    setForm({
+      nombre: "",
+      email: "",
+      username: "",
+      password: "",
+      rol: "usuario",
+      activo: true
+    });
+    setUsuarioEditando(null);
+    setMostrarFormulario(false);
+  };
