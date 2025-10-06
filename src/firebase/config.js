@@ -1,19 +1,14 @@
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
-
-// Configuración de Firebase
-// IMPORTANTE: Reemplaza estos valores con tu configuración real de Firebase
+import { getStorage } from 'firebase/storage';
 const firebaseConfig = {
-  apiKey: "tu-api-key-aqui",
-  authDomain: "tu-proyecto.firebaseapp.com",
-  projectId: "tu-proyecto-id",
-  storageBucket: "tu-proyecto.appspot.com",
-  messagingSenderId: "123456789",
-  appId: "tu-app-id"
+  apiKey: "AIzaSyAkYKDv-ewuBxiQWojq1NHi64BJRcuUyf8",
+  authDomain: "proyecto-widi-b83ae.firebaseapp.com",
+  projectId: "proyecto-widi-b83ae",
+  storageBucket: "proyecto-widi-b83ae.firebasestorage.app",
+  messagingSenderId: "631199394536",
+  appId: "1:631199394536:web:894399e5dc16c813f9f75d"
 };
-
-// Inicializar Firebase
 const app = initializeApp(firebaseConfig);
-
-// Inicializar Firestore
 export const db = getFirestore(app);
+export const storage = getStorage(app);
