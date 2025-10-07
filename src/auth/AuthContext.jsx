@@ -35,7 +35,7 @@ export function AuthProvider({ children }) {
 
   const isLoggedIn = () => !!user;
 
-  return <AuthCtx.Provider value={{ user, login, logout }}>{children}</AuthCtx.Provider>;
+  return <AuthCtx.Provider value={{ user, login, logout, isLoggedIn }}>{children}</AuthCtx.Provider>;
 }
 
 export const useAuth = () => useContext(AuthCtx);
