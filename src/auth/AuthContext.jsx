@@ -21,7 +21,7 @@ export function AuthProvider({ children }) {
   }
     const found = FAKE_USERS.find(u => u.username === username);
   if (!found || found.password !== password) {
-    throw new Error("Credenciales inválidas");
+    throw new Error(" Credenciales inválidas");
   }
     const u = { username: found.username, nombre: found.nombre };
     setUser(u);
