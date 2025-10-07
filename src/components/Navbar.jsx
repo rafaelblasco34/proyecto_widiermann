@@ -20,7 +20,7 @@ export default function Navbar() {
           {user ? (
             <>
             <span className="mr-2 font-semibold"> {nombreUsuario}</span>
-              <NavLink to="/denuncias/nueva" className={active}>Nueva</NavLink>
+              {user && <NavLink to="/denuncias/nueva" className={active}>Nueva</NavLink>}
               <button onClick={logout}className="btn btn-primary bg-red-500 hover:bg-red-600">Salir</button>
             </>
           ) : (
