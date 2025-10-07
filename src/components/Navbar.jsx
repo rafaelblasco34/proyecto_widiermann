@@ -3,6 +3,7 @@ import { useAuth } from "../auth/AuthContext.jsx";
 
 export default function Navbar() {
   const { user, logout } = useAuth();
+  const nombreUsuario = user?.nombre || "";
   const linkBase= "px-3 py-2 rounded-xl hover:bg-gray-100";
   const active = ({ isActive }) =>
   isActive ? `${linkBase} bg-gray-200` : linkBase;
