@@ -16,8 +16,13 @@ export function AuthProvider({ children }) {
   }, []);
 
   const login = (username, password) => {
-    const found = FAKE_USERS.find(u => u.username === username && u.password === password);
-    if (!found) throw new Error("Credenciales inválidas");
+    if (!username || !password) {
+    throw new Error("Debe completar usuario y contraseña");
+  }
+    const found = FAKE_USERS.find(u => u.username === username);
+  if (!found || found.password !== password) {
+    throw new Error("Credenciales inválidas");
+  }
     const u = { username: found.username, nombre: found.nombre };
     setUser(u);
     localStorage.setItem("user", JSON.stringify(u));
