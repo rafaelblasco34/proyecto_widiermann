@@ -33,6 +33,8 @@ export function AuthProvider({ children }) {
     localStorage.removeItem("user");
   };
 
+  const isLoggedIn = () => !!user;
+
   return <AuthCtx.Provider value={{ user, login, logout }}>{children}</AuthCtx.Provider>;
 }
 
