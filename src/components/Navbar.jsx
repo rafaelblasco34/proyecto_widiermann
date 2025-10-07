@@ -19,6 +19,7 @@ export default function Navbar() {
           <NavLink to="/contacto" className={active}>Contacto</NavLink>
           {user ? (
             <>
+            <span className="mr-2 font-semibold"> {nombreUsuario}</span>
               <NavLink to="/denuncias/nueva" className={active}>Nueva</NavLink>
               <button onClick={logout} className="btn btn-primary">Salir</button>
             </>
