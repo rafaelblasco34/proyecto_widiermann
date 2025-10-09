@@ -111,4 +111,4 @@ export default function Registro() {
       <p>Esta pantalla simula un registro. Podés usar los usuarios de prueba del login.</p>
     </section>
   );
-}
+} 
