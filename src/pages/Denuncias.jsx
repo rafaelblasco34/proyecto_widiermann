@@ -35,3 +35,25 @@ export default function Denuncias() {
         return "bg-gray-100 text-gray-800";
     }
   };
+if (loading) {
+    return (
+      <div className="container-page">
+        <div className="text-center py-12">
+          <div className="text-6xl mb-4">⏳</div>
+          <h3 className="text-xl font-semibold text-gray-600">Cargando denuncias...</h3>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="container-page">
+        <div className="text-center py-12">
+          <div className="text-6xl mb-4">⚠</div>
+          <h3 className="text-xl font-semibold text-gray-600">Error al cargar</h3>
+          <p className="text-gray-500">{error}</p>
+       </div>
+      </div>
+    );
+  }
