@@ -1,4 +1,2 @@
 import React, { useState } from 'react';
-import { agregarProducto } from '../firebase/firestoreService.js';
-
-
+import { crearDenuncia, subirImagen } from '../firebase/firestoreService.js';
