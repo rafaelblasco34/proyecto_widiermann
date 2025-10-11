@@ -200,4 +200,128 @@ const AltaDato = ({ onDenunciaAgregada }) => {
             />
           </div>
 
-          
+           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label htmlFor="tipo" className="block text-sm font-medium text-gray-700 mb-2">
+                Tipo de Denuncia *
+              </label>
+              <select
+                id="tipo"
+                name="tipo"
+                value={formData.tipo}
+                onChange={handleChange}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                required
+              >
+                <option value="">Selecciona un tipo</option>
+                {tiposDenuncia.map(tipo => (
+                  <option key={tipo} value={tipo}>
+                    {tipo}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+              <div>
+              <label htmlFor="comisaria" className="block text-sm font-medium text-gray-700 mb-2">
+                Comisaría *
+              </label>
+              <select
+                id="comisaria"
+                name="comisaria"
+                value={formData.comisaria}
+                onChange={handleChange}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                required
+              >
+                <option value="">Selecciona una comisaría</option>
+                {comisarias.map(comisaria => (
+                  <option key={comisaria} value={comisaria}>
+                    {comisaria}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label htmlFor="ubicacion" className="block text-sm font-medium text-gray-700 mb-2">
+              Ubicación del Incidente *
+            </label>
+            <input
+              type="text"
+              id="ubicacion"
+              name="ubicacion"
+              value={formData.ubicacion}
+              onChange={handleChange}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              placeholder="Ej: Parque Central, Calle Principal"
+              required
+            />
+          </div>
+
+          <div>
+            <label htmlFor="direccion" className="block text-sm font-medium text-gray-700 mb-2">
+              Dirección Específica
+            </label>
+            <input
+              type="text"
+              id="direccion"
+              name="direccion"
+              value={formData.direccion}
+              onChange={handleChange}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              placeholder="Dirección exacta (opcional)"
+            />
+          </div>
+
+           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label htmlFor="lat" className="block text-sm font-medium text-gray-700 mb-2">
+                Latitud
+              </label>
+              <input
+                type="number"
+                id="lat"
+                name="lat"
+                value={formData.coordenadas.lat}
+                onChange={handleCoordenadasChange}
+                step="any"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                placeholder="Ej: -34.6037"
+              />
+            </div>
+
+              <div>
+              <label htmlFor="lng" className="block text-sm font-medium text-gray-700 mb-2">
+                Longitud
+              </label>
+              <input
+                type="number"
+                id="lng"
+                name="lng"
+                value={formData.coordenadas.lng}
+                onChange={handleCoordenadasChange}
+                step="any"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                placeholder="Ej: -58.3816"
+              />
+            </div>
+          </div>
+
+           <div>
+            <label htmlFor="descripcion" className="block text-sm font-medium text-gray-700 mb-2">
+              Descripción Detallada *
+            </label>
+            <textarea
+              id="descripcion"
+              name="descripcion"
+              value={formData.descripcion}
+              onChange={handleChange}
+              rows={4}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              placeholder="Describe detalladamente lo que ocurrió..."
+              required
+            />
+          </div>
+
