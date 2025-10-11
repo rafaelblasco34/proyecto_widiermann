@@ -77,3 +77,44 @@ export function AuthProvider({ children }) {
       setLoading(false);
     }
   };
+
+   const logout = () => {
+    setUser(null);
+    localStorage.removeItem("user");
+    console.log("Usuario deslogueado");
+  };
+
+  const actualizarUsuario = (datosActualizados) => {
+    if (user) {
+      const usuarioActualizado = { ...user, ...datosActualizados };
+      setUser(usuarioActualizado);
+      localStorage.setItem("user", JSON.stringify(usuarioActualizado));
+    }
+  };
+
+   // Mostrar loading mientras se verifica la sesión
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Verificando sesión...</p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <AuthCtx.Provider value={{ 
+      user, 
+      login, 
+      logout, 
+      actualizarUsuario,
+      loading 
+    }}>
+      {children}
+    </AuthCtx.Provider>
+  );
+}
+
+export const useAuth = () => useContext(AuthCtx);
