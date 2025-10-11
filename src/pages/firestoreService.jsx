@@ -64,3 +64,54 @@ export const eliminarDenuncia = async (id) => {
     throw error;
   }
 };
+// Funciones para usuarios
+export const obtenerUsuarios = async () => {
+  try {
+    const querySnapshot = await getDocs(collection(db, "usuarios"));
+    const usuarios = [];
+    
+    querySnapshot.forEach((doc) => {
+      usuarios.push({
+        id: doc.id,
+        ...doc.data()
+      });
+    });
+    
+    return usuarios;
+  } catch (error) {
+    console.error("Error al obtener usuarios:", error);
+ throw error;
+  }
+};
+
+export const crearUsuario = async (usuarioData) => {
+  try {
+    const docRef = await addDoc(collection(db, "usuarios"), {
+      ...usuarioData,
+      createdAt: new Date(),
+      activo: usuarioData.activo !== false
+    });
+    return docRef.id;
+  } catch (error) {
+    console.error("Error al crear usuario:", error);
+    throw error;
+  }
+};
+export const actualizarUsuario = async (id, datos) => {
+  try {
+    const usuarioRef = doc(db, "usuarios", id);
+    await updateDoc(usuarioRef, datos);
+  } catch (error) {
+    console.error("Error al actualizar usuario:", error);
+    throw error;
+  }
+};
+
+export const eliminarUsuario = async (id) => {
+  try {
+    await deleteDoc(doc(db, "usuarios", id));
+  } catch (error) {
+    console.error("Error al eliminar usuario:", error);
+    throw error;
+  }
+};
