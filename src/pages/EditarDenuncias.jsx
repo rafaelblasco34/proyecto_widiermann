@@ -64,9 +64,43 @@ export default function EditarDenuncia({ denuncia, onClose }) {
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Tipo de Denuncia
             </label>
+            <select name="tipo" value={form.tipo} onChange={handleChange} className="w-full border p-2 rounded" >
+               <option value="">Seleccionar tipo</option>
+              <option value="robo">Robo</option>
+              <option value="vandalismo">Vandalismo</option>
+              <option value="ruidos">Ruidos molestos</option>
+              <option value="violencia">Violencia</option>
+              <option value="trafico">Tráfico</option>
+              <option value="otros">Otros</option>
+            </select>
+           </div>
+            <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Estado *
+            </label>
             <select
-              name="tipo"
-              value={form.tipo}
+              name="estado"
+              value={form.estado}
               onChange={handleChange}
               className="w-full border p-2 rounded"
-            ></select>
+            >
+              <option value="En proceso">En proceso</option>
+              <option value="En investigación">En investigación</option>
+              <option value="Resuelto">Resuelto</option>
+              <option value="Cerrado">Cerrado</option>
+            </select>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Ubicación
+            </label>
+            <input
+              type="text"
+              name="ubicacion"
+              value={form.ubicacion}
+              onChange={handleChange}
+              className="w-full border p-2 rounded"
+              placeholder="Ubicación del incidente"
+            />
+          </div>
+          
