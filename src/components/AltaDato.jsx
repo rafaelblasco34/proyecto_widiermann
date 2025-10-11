@@ -58,7 +58,7 @@ const AltaDato = ({ onDenunciaAgregada }) => {
     
     for (const archivo of archivos) {
       if (archivo.size > 5 * 1024 * 1024) { // 5MB límite
-        setMensaje(La imagen ${archivo.name} es muy grande. Máximo 5MB.);
+        setMensaje("La imagen ${archivo.name} es muy grande. Máximo 5MB.");
         continue;
       }
 
@@ -69,7 +69,7 @@ const AltaDato = ({ onDenunciaAgregada }) => {
         setImagenes(prev => [...prev, imagenData]);
       } catch (error) {
         console.error("Error al subir imagen:", error);
-        setMensaje(Error al subir ${archivo.name});
+        setMensaje("Error al subir ${archivo.name}");
       } finally {
         setImagenesSubiendo(prev => prev.filter(nombre => nombre !== archivo.name));
       }
@@ -324,4 +324,81 @@ const AltaDato = ({ onDenunciaAgregada }) => {
               required
             />
           </div>
+
+           <div>
+            <label htmlFor="imagenes" className="block text-sm font-medium text-gray-700 mb-2">
+              Imágenes del Incidente
+            </label>
+            <input
+              type="file"
+              id="imagenes"
+              multiple
+              accept="image/*"
+              onChange={handleImagenChange}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            />
+            <p className="text-sm text-gray-500 mt-1">Máximo 5MB por imagen</p>
+            
+            {imagenesSubiendo.length > 0 && (
+              <div className="mt-2">
+                <p className="text-sm text-blue-600">Subiendo imágenes...</p>
+                {imagenesSubiendo.map((nombre, index) => (
+                  <p key={index} className="text-xs text-gray-500">• {nombre}</p>
+                ))}
+              </div>
+               )}
+
+            {imagenes.length > 0 && (
+              <div className="mt-4 grid grid-cols-2 md:grid-cols-3 gap-2">
+                {imagenes.map((imagen, index) => (
+                  <div key={index} className="relative">
+                    <img 
+                      src={imagen.url} 
+                      alt={Imagen ${index + 1}}
+                      className="w-full h-24 object-cover rounded border"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => eliminarImagen(index)}
+                      className="absolute top-1 right-1 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-red-600"
+                    >
+                      ×
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <div className="flex justify-end space-x-4">
+            <button
+              type="button"
+              onClick={limpiarFormulario}
+              className="px-6 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors"
+              disabled={cargando}
+            >
+              Limpiar
+            </button>
+            <button
+              type="submit"
+              disabled={cargando || imagenesSubiendo.length > 0}
+              className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center"
+            >
+              {cargando ? (
+                <>
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                  Registrando...
+                </>
+              ) : (
+                'Registrar Denuncia'
+              )}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+};
+
+export default AltaDato;
 
