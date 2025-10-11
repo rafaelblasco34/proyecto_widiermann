@@ -103,4 +103,66 @@ export default function EditarDenuncia({ denuncia, onClose }) {
               placeholder="Ubicación del incidente"
             />
           </div>
-          
+           <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Dirección Específica
+            </label>
+            <input
+              type="text"
+              name="direccion"
+              value={form.direccion}
+              onChange={handleChange}
+              className="w-full border p-2 rounded"
+              placeholder="Dirección exacta"
+            />
+          </div>
+           <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Descripción *
+            </label>
+            <textarea
+              name="descripcion"
+              value={form.descripcion}
+              onChange={handleChange}
+              className="w-full border p-2 rounded h-20"
+              required
+            />
+          </div>
+           <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Comisaría
+            </label>
+            <select
+              name="comisaria"
+              value={form.comisaria}
+              onChange={handleChange}
+              className="w-full border p-2 rounded"
+            >
+              <option value="">Seleccionar comisaría</option>
+              <option value="central">Comisaría Central</option>
+              <option value="2da">Comisaría 2da</option>
+              <option value="3ra">Comisaría 3ra</option>
+              <option value="4ta">Comisaría 4ta</option>
+            </select>
+          </div>
+           <div className="flex gap-2">
+            <button
+              type="submit"
+              className="btn btn-primary flex-1"
+              disabled={loading}
+            >
+              {loading ? 'Guardando...' : 'Guardar'}
+            </button>
+            <button
+              type="button"
+              onClick={onClose}
+              className="btn bg-gray-200 hover:bg-gray-300 text-gray-800"
+            >
+              Cancelar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+}
