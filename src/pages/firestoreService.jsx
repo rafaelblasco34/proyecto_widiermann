@@ -115,3 +115,65 @@ export const eliminarUsuario = async (id) => {
     throw error;
   }
 };
+// Funciones para subir imágenes
+export const subirImagen = async (archivo, carpeta = 'denuncias') => {
+  try {
+    const nombreArchivo = ${Date.now()}_${archivo.name};
+    const imagenRef = ref(storage, ${carpeta}/${nombreArchivo});
+    
+    const snapshot = await uploadBytes(imagenRef, archivo);
+    const url = await getDownloadURL(snapshot.ref);
+    
+    return {
+      nombre: nombreArchivo,
+      url: url,
+      ruta: snapshot.ref.fullPath
+    };
+  } catch (error) {
+    console.error("Error al subir imagen:", error);
+    throw error;
+  }
+};
+
+export const eliminarImagen = async (rutaImagen) => {
+  try {
+    const imagenRef = ref(storage, rutaImagen);
+    await deleteObject(imagenRef);
+  } catch (error) {
+    console.error("Error al eliminar imagen:", error);
+    throw error;
+  }
+};
+
+// Funciones para ubicaciones
+export const obtenerUbicaciones = async () => {
+  try {
+    const querySnapshot = await getDocs(collection(db, "ubicaciones"));
+    const ubicaciones = [];
+    
+    querySnapshot.forEach((doc) => {
+      ubicaciones.push({
+        id: doc.id,
+        ...doc.data()
+      });
+    });
+
+        return ubicaciones;
+  } catch (error) {
+    console.error("Error al obtener ubicaciones:", error);
+    throw error;
+  }
+};
+
+export const crearUbicacion = async (ubicacionData) => {
+  try {
+    const docRef = await addDoc(collection(db, "ubicaciones"), {
+      ...ubicacionData,
+      createdAt: new Date()
+    });
+    return docRef.id;
+  } catch (error) {
+    console.error("Error al crear ubicación:", error);
+    throw error;
+  }
+};
