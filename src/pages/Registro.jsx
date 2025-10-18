@@ -149,6 +149,35 @@ export default function Registro() {
           disabled={loading}
           required
         />
+<<<<<<< HEAD
+=======
+
+        
+        <button className="btn btn-primary w-full">Crear cuenta</button>
+        
+        <p className="text-sm text-center opacity-70">
+          ¿Ya tienes cuenta?{" "}
+          <button 
+            type="button" 
+            onClick={() => navigate("/login")}
+            className="text-blue-600 hover:underline"
+          >
+            Inicia sesión
+          </button>
+        </p>
+      </form>
+    </div>
+  );
+}export default function Registro() {
+  return (
+    <section className="card max-w-md mx-auto">
+      <h2 className="text-xl font-semibold mb-2">Registro (demo)</h2>
+      <p>Esta pantalla simula un registro. Podés usar los usuarios de prueba del login.</p>
+    </section>
+  );
+}
+=======
+>>>>>>> 9a34309 (Cambios en el submodulo)
         {errors.confirmPassword && <p className="text-red-600 text-sm mt-1">{errors.confirmPassword}</p>}
       </div>
       
