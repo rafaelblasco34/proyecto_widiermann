@@ -8,7 +8,7 @@ import Registro from "./pages/Registro.jsx";
 import NuevaDenuncia from "./pages/NuevaDenuncia.jsx";
 import { AuthProvider } from "./auth/AuthContext.jsx";
 import ProtectedRoute from "./auth/ProtectedRoute.jsx";
-
+import { AuthProvider } from "./auth/AuthContext.jsx";
 export default function App() {
   return (
     <AuthProvider>
