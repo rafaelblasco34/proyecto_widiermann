@@ -91,3 +91,27 @@ export default function Denuncias() {
             Consulta el estado y seguimiento de todas las denuncias
           </p>
         </div>
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <div className="card text-center">
+            <div className="text-3xl font-bold text-primary-600 mb-2">{denuncias.length}</div>
+            <div className="text-gray-600 font-medium">Total Denuncias</div>
+          </div>
+          <div className="card text-center">
+            <div className="text-3xl font-bold text-success-600 mb-2">
+              {denuncias.filter(d => d.estado === "Resuelto").length}
+            </div>
+            <div className="text-gray-600 font-medium">Resueltas</div>
+          </div>
+          <div className="card text-center">
+            <div className="text-3xl font-bold text-warning-600 mb-2">
+              {denuncias.filter(d => d.estado === "En proceso").length}
+            </div>
+            <div className="text-gray-600 font-medium">En Proceso</div>
+          </div>
+          <div className="card text-center">
+            <div className="text-3xl font-bold text-primary-600 mb-2">
+              {denuncias.filter(d => d.estado === "En investigación").length}
+            </div>
+            <div className="text-gray-600 font-medium">En Investigación</div>
+          </div>
+        </div>
