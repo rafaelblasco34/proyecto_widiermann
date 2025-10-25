@@ -115,3 +115,62 @@ export default function Denuncias() {
             <div className="text-gray-600 font-medium">En Investigación</div>
           </div>
         </div>
+                <div className="space-y-4">
+          {denuncias.map((denuncia, index) => (
+            <div 
+              key={denuncia.id} 
+              className="card hover:shadow-medium transition-all duration-300 cursor-pointer group"
+              style={{ animationDelay: `${index * 0.1}s` }}
+            >
+              <Link to={`/denuncias/${denuncia.id}`} className="block">
+                <div className="flex justify-between items-start">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-3">
+                      <h3 className="text-xl font-heading font-semibold text-gray-800 group-hover:text-primary-600 transition-colors">
+                        {denuncia.titulo}
+                      </h3>
+                      <span className={`${getEstadoColor(denuncia.estado)} flex items-center gap-2`}>
+                        {getEstadoIcon(denuncia.estado)}
+                        {denuncia.estado}
+                      </span>
+                    </div>
+                    <p className="text-gray-600 mb-3 leading-relaxed">
+                      {denuncia.descripcion}
+                    </p>
+                    <div className="flex items-center gap-4 text-sm text-gray-500">
+                      <span className="flex items-center gap-1">
+                        <FaClock className="text-xs" />
+                        {denuncia.fecha}
+                      </span>
+                      <span className="text-primary-600 font-medium group-hover:underline">
+                        Ver detalles →
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            </div>
+          ))}
+        </div>
+
+        {denuncias.length === 0 && (
+          <div className="text-center py-20">
+            <div className="w-24 h-24 bg-gradient-to-r from-gray-400 to-gray-500 rounded-full flex items-center justify-center mx-auto mb-6">
+              <FaExclamationTriangle className="text-white text-4xl" />
+            </div>
+            <h3 className="text-2xl font-heading font-semibold text-gray-700 mb-4">
+              No hay denuncias registradas
+            </h3>
+            <p className="text-gray-500 mb-8 max-w-md mx-auto">
+              Las denuncias aparecerán aquí una vez que sean registradas en el sistema.
+            </p>
+            <Link to="/denuncias/nueva" className="btn btn-primary">
+              <FaPlus className="mr-2" />
+              Crear Primera Denuncia
+            </Link>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
