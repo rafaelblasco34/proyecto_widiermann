@@ -83,3 +83,16 @@ Accent: #ef4444 (Rojo de error)
 - Iconos descriptivos
 - Estados de éxito
 - Diseño de dos columnas
+## 🛠️ Tecnologías Implementadas
+
+### Frontend
+- ✅ **React 18.2.0** - Biblioteca principal
+- ✅ **React Router DOM 7.8.2** - Enrutamiento
+- ✅ **Tailwind CSS 4.1.12** - Framework de estilos
+- ✅ **React Icons 5.0.1** - Iconografía
+- ✅ **Firebase 12.2.1** - Backend
+
+### Herramientas de Desarrollo
+- ✅ **Create React App** - Boilerplate
+- ✅ **PostCSS** - Procesador CSS
+- ✅ **Autoprefixer** - Prefijos CSS
