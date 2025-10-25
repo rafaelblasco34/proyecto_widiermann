@@ -7,3 +7,18 @@ export default function Denuncias() {
   const [denuncias, setDenuncias] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  useEffect(() => {
+    const cargarDenuncias = async () => {
+      try {
+        setLoading(true);
+        const denunciasData = await obtenerDenuncias();
+        setDenuncias(denunciasData);
+      } catch (err) {
+        setError("Error al cargar las denuncias");
+        console.error("Error:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    cargarDenuncias();
+  }, []);
