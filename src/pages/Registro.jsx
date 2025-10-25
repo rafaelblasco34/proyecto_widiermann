@@ -78,3 +78,27 @@ export default function Registro() {
       }, 1000);
     }
   };
+  return (
+    <div className="container-page">
+      <div className="max-w-md mx-auto">
+        <div className="text-center mb-8">
+          <div className="w-20 h-20 bg-gradient-to-r from-primary-600 to-primary-700 rounded-2xl flex items-center justify-center mx-auto mb-6">
+            <FaUserPlus className="text-white text-3xl" />
+          </div>
+          <h2 className="text-3xl font-heading font-bold text-gray-800 mb-2">
+            Crear Cuenta
+          </h2>
+          <p className="text-gray-600">
+            Únete a nuestra plataforma de denuncias
+          </p>
+        </div>
+
+        <form onSubmit={handleSubmit} className="card space-y-6">
+          {errors.general && (
+            <div className="bg-accent-50 border border-accent-200 text-accent-700 px-4 py-3 rounded-xl flex items-center gap-2">
+              <div className="w-5 h-5 rounded-full bg-accent-500 flex items-center justify-center">
+                <span className="text-white text-xs font-bold">!</span>
+              </div>
+              {errors.general}
+            </div>
+          )}
