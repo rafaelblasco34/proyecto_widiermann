@@ -35,7 +35,7 @@ export const crearDenuncia = async (denunciaData) => {
       ...denunciaData,
       fecha: new Date().toISOString().split('T')[0],
       estado: "En proceso",
-      numeroExpediente: EXP-${Date.now()},
+      numeroExpediente: `EXP-${Date.now()}`,
       createdAt: new Date(),
       imagenes: denunciaData.imagenes || []
     });
@@ -80,7 +80,7 @@ export const obtenerUsuarios = async () => {
     return usuarios;
   } catch (error) {
     console.error("Error al obtener usuarios:", error);
- throw error;
+    throw error;
   }
 };
 
@@ -118,8 +118,8 @@ export const eliminarUsuario = async (id) => {
 // Funciones para subir imágenes
 export const subirImagen = async (archivo, carpeta = 'denuncias') => {
   try {
-    const nombreArchivo = ${Date.now()}_${archivo.name};
-    const imagenRef = ref(storage, ${carpeta}/${nombreArchivo});
+    const nombreArchivo = `${Date.now()}_${archivo.name}`;
+    const imagenRef = ref(storage, `${carpeta}/${nombreArchivo}`);
     
     const snapshot = await uploadBytes(imagenRef, archivo);
     const url = await getDownloadURL(snapshot.ref);
@@ -158,7 +158,7 @@ export const obtenerUbicaciones = async () => {
       });
     });
 
-        return ubicaciones;
+    return ubicaciones;
   } catch (error) {
     console.error("Error al obtener ubicaciones:", error);
     throw error;
