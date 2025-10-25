@@ -312,4 +312,3 @@ export default function NuevaDenuncia() {
       </form>
     </div>
   );
-
