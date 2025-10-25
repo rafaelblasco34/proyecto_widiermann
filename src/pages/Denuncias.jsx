@@ -47,3 +47,36 @@ export default function Denuncias() {
         return <FaClock className="text-gray-600" />;
     }
   };
+    if (loading) {
+    return (
+      <div className="container-page">
+        <div className="text-center py-20">
+          <div className="w-20 h-20 bg-gradient-to-r from-primary-500 to-primary-600 rounded-full flex items-center justify-center mx-auto mb-6 animate-pulse-soft">
+            <FaExclamationTriangle className="text-white text-3xl" />
+          </div>
+          <h3 className="text-2xl font-heading font-semibold text-gray-700 mb-2">Cargando denuncias...</h3>
+          <p className="text-gray-500">Por favor espera un momento</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="container-page">
+        <div className="text-center py-20">
+          <div className="w-20 h-20 bg-gradient-to-r from-accent-500 to-accent-600 rounded-full flex items-center justify-center mx-auto mb-6">
+            <FaExclamationTriangle className="text-white text-3xl" />
+          </div>
+          <h3 className="text-2xl font-heading font-semibold text-gray-700 mb-2">Error al cargar</h3>
+          <p className="text-gray-500 mb-6">{error}</p>
+          <button 
+            onClick={() => window.location.reload()} 
+            className="btn btn-primary"
+          >
+            Intentar de nuevo
+          </button>
+        </div>
+      </div>
+    );
+  }
