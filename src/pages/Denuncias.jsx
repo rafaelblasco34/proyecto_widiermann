@@ -80,3 +80,14 @@ export default function Denuncias() {
       </div>
     );
   }
+    return (
+    <div className="container-page">
+      <div className="space-y-8">
+        <div className="text-center">
+          <h1 className="text-4xl font-heading font-bold gradient-text mb-4">
+            Denuncias Registradas
+          </h1>
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            Consulta el estado y seguimiento de todas las denuncias
+          </p>
+        </div>
