@@ -102,3 +102,37 @@ export default function Registro() {
               {errors.general}
             </div>
           )}
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
+              <FaUser className="text-primary-600" />
+              Nombre completo
+            </label>
+            <input
+              name="nombre"
+              placeholder="Ingresa tu nombre completo"
+              className={`input-field ${errors.nombre ? 'input-error' : ''}`}
+              value={form.nombre}
+              onChange={handleChange}
+              disabled={loading}
+              required
+            />
+            {errors.nombre && <p className="error-message">{errors.nombre}</p>}
+          </div>
+          
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
+              <FaEnvelope className="text-primary-600" />
+              Email
+            </label>
+            <input
+              name="email"
+              type="email"
+              placeholder="Ingresa tu email"
+              className={`input-field ${errors.email ? 'input-error' : ''}`}
+              value={form.email}
+              onChange={handleChange}
+              disabled={loading}
+              required
+            />
+            {errors.email && <p className="error-message">{errors.email}</p>}
+          </div>
