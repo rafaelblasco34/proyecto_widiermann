@@ -22,3 +22,28 @@ export default function Denuncias() {
     };
     cargarDenuncias();
   }, []);
+    const getEstadoColor = (estado) => {
+    switch (estado) {
+      case "Resuelto":
+        return "status-resolved";
+      case "En proceso":
+        return "status-in-progress";
+      case "En investigación":
+        return "status-investigation";
+      default:
+        return "status-pending";
+    }
+  };
+
+  const getEstadoIcon = (estado) => {
+    switch (estado) {
+      case "Resuelto":
+        return <FaCheckCircle className="text-success-600" />;
+      case "En proceso":
+        return <FaClock className="text-warning-600" />;
+      case "En investigación":
+        return <FaExclamationTriangle className="text-primary-600" />;
+      default:
+        return <FaClock className="text-gray-600" />;
+    }
+  };
