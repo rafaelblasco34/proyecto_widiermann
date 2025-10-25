@@ -152,3 +152,57 @@ export default function Registro() {
             />
             {errors.username && <p className="error-message">{errors.username}</p>}
           </div>
+        <div className="space-y-2">
+            <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
+              <FaLock className="text-primary-600" />
+              Contraseña
+            </label>
+            <div className="relative">
+              <input
+                name="password"
+                type={showPassword ? "text" : "password"}
+                placeholder="Crea una contraseña segura"
+                className={`input-field pr-12 ${errors.password ? 'input-error' : ''}`}
+                value={form.password}
+                onChange={handleChange}
+                disabled={loading}
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                disabled={loading}
+              >
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </button>
+            </div>
+            {errors.password && <p className="error-message">{errors.password}</p>}
+          </div>
+<div className="space-y-2">
+            <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
+              <FaLock className="text-primary-600" />
+              Contraseña
+            </label>
+            <div className="relative">
+              <input
+                name="password"
+                type={showPassword ? "text" : "password"}
+                placeholder="Crea una contraseña segura"
+                className={`input-field pr-12 ${errors.password ? 'input-error' : ''}`}
+                value={form.password}
+                onChange={handleChange}
+                disabled={loading}
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                disabled={loading}
+              >
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </button>
+            </div>
+            {errors.password && <p className="error-message">{errors.password}</p>}
+          </div>
