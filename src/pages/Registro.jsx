@@ -206,3 +206,66 @@ export default function Registro() {
             </div>
             {errors.password && <p className="error-message">{errors.password}</p>}
           </div>
+<div className="space-y-2">
+            <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
+              <FaLock className="text-primary-600" />
+              Confirmar contraseña
+            </label>
+            <div className="relative">
+              <input
+                name="confirmPassword"
+                type={showConfirmPassword ? "text" : "password"}
+                placeholder="Confirma tu contraseña"
+                className={`input-field pr-12 ${errors.confirmPassword ? 'input-error' : ''}`}
+                value={form.confirmPassword}
+                onChange={handleChange}
+                disabled={loading}
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                disabled={loading}
+              >
+                {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+              </button>
+            </div>
+            {errors.confirmPassword && <p className="error-message">{errors.confirmPassword}</p>}
+          </div>
+          
+          <button 
+            className="btn btn-primary w-full text-lg py-4"
+            disabled={loading}
+          >
+            {loading ? (
+              <>
+                <div className="loading-spinner mr-2"></div>
+                Creando cuenta...
+              </>
+            ) : (
+              <>
+                <FaUserPlus className="mr-2" />
+                Crear Cuenta
+              </>
+            )}
+          </button>
+          
+          <div className="text-center">
+            <p className="text-sm text-gray-600">
+              ¿Ya tienes cuenta?{" "}
+              <button 
+                type="button" 
+                onClick={() => navigate("/login")}
+                className="text-primary-600 hover:text-primary-700 font-medium hover:underline transition-colors"
+                disabled={loading}
+              >
+                Inicia sesión
+              </button>
+            </p>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+}
