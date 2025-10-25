@@ -55,3 +55,26 @@ export default function Registro() {
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
+  const handleChange = e => {
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
+    
+    if (errors[name]) {
+      setErrors({ ...errors, [name]: "" });
+    }
+  };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    
+    if (validateForm()) {
+      setLoading(true);
+      // Simulate API call
+      setTimeout(() => {
+        alert("Registro exitoso. Ya puedes iniciar sesión.");
+        console.log("REGISTRO:", form);
+        setLoading(false);
+        navigate("/login");
+      }, 1000);
+    }
+  };
