@@ -136,3 +136,19 @@ export default function Registro() {
             />
             {errors.email && <p className="error-message">{errors.email}</p>}
           </div>
+    <div className="space-y-2">
+            <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
+              <FaUser className="text-primary-600" />
+              Usuario
+            </label>
+            <input
+              name="username"
+              placeholder="Elige un nombre de usuario"
+              className={`input-field ${errors.username ? 'input-error' : ''}`}
+              value={form.username}
+              onChange={handleChange}
+              disabled={loading}
+              required
+            />
+            {errors.username && <p className="error-message">{errors.username}</p>}
+          </div>
