@@ -2,12 +2,16 @@ import {
   collection, 
   addDoc, 
   getDocs, 
+  doc, 
   updateDoc, 
   deleteDoc, 
-  doc,
-  query,
-  orderBy 
+  query, 
+  orderBy, 
+  where,
+  getDoc 
 } from 'firebase/firestore';
-import { db } from './config.js';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { db, storage } from './config.js';
+
 
 
