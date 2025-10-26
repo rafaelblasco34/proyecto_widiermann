@@ -98,5 +98,41 @@ export const eliminarDenuncia = async (id) => {
     throw error;
   }
 };
+export const obtenerUsuarios = async () => {
+  try {
+    const usuariosRef = collection(db, 'usuarios');
+    const querySnapshot = await getDocs(usuariosRef);
+    
+    const usuarios = [];
+    querySnapshot.forEach((doc) => {
+      usuarios.push({
+        id: doc.id,
+        ...doc.data()
+      });
+    });
+    
+    return usuarios;
+  } catch (error) {
+    console.error('Error obteniendo usuarios:', error);
+    throw error;
+  }
+};
+
+// Crear usuario
+export const crearUsuario = async (usuarioData) => {
+  try {
+    const usuariosRef = collection(db, 'usuarios');
+    const docRef = await addDoc(usuariosRef, {
+      ...usuarioData,
+      fechaCreacion: new Date(),
+      activo: true
+    });
+    
+    return docRef.id;
+  } catch (error) {
+    console.error('Error creando usuario:', error);
+    throw error;
+  }
+};
 
 
