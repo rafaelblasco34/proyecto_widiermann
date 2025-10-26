@@ -42,3 +42,18 @@ export default function Inicio() {
               Crear cuenta
             </Link>
           </div>
+          <div className="flex flex-wrap justify-center gap-6 mb-12 text-sm">
+            <Link to="/" className="flex items-center gap-1 text-black hover:text-green-600">
+              <FaHome className="text-xs" />
+              Inicio
+            </Link>
+            <Link to="/denuncias" className="flex items-center gap-1 text-black hover:text-green-600">
+              <FaExclamationTriangle className="text-xs" />
+              Denuncias
+            </Link>
+            <Link to="/contacto" className="flex items-center gap-1 text-black hover:text-green-600">
+              <FaEnvelope className="text-xs" />
+              Contacto
+            </Link>
+          </div>
+        </div>
