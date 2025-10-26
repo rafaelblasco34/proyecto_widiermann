@@ -33,5 +33,70 @@ export const obtenerDenuncias = async () => {
     throw error;
   }
 };
+export const obtenerDenuncia = async (id) => {
+  try {
+    const denunciaRef = doc(db, 'denuncias', id);
+    const denunciaSnap = await getDoc(denunciaRef);
+    
+    if (denunciaSnap.exists()) {
+      return {
+        id: denunciaSnap.id,
+        ...denunciaSnap.data()
+      };
+    } else {
+      throw new Error('Denuncia no encontrada');
+    }
+  } catch (error) {
+    console.error('Error obteniendo denuncia:', error);
+    throw error;
+  }
+};
+
+// Crear nueva denuncia
+export const crearDenuncia = async (denunciaData) => {
+  try {
+    const denunciasRef = collection(db, 'denuncias');
+    const docRef = await addDoc(denunciasRef, {
+      ...denunciaData,
+      fecha: new Date().toISOString(),
+      estado: 'Pendiente',
+      fechaCreacion: new Date()
+    });
+    
+    return docRef.id;
+  } catch (error) {
+    console.error('Error creando denuncia:', error);
+    throw error;
+  }
+};
+
+// Actualizar denuncia
+export const actualizarDenuncia = async (id, datosActualizados) => {
+  try {
+    const denunciaRef = doc(db, 'denuncias', id);
+    await updateDoc(denunciaRef, {
+      ...datosActualizados,
+      fechaActualizacion: new Date()
+    });
+    
+    return true;
+  } catch (error) {
+    console.error('Error actualizando denuncia:', error);
+    throw error;
+  }
+};
+
+// Eliminar denuncia
+export const eliminarDenuncia = async (id) => {
+  try {
+    const denunciaRef = doc(db, 'denuncias', id);
+    await deleteDoc(denunciaRef);
+    
+    return true;
+  } catch (error) {
+    console.error('Error eliminando denuncia:', error);
+    throw error;
+  }
+};
 
 
