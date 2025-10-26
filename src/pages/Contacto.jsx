@@ -101,3 +101,28 @@ return (
                 </div>
               </div>
             </div>
+            {/* Additional Info Card */}
+            <div className="card bg-gradient-to-r from-primary-50 to-primary-100 border-primary-200">
+              <h4 className="font-heading font-semibold text-gray-800 mb-3">
+                ¿Por qué contactarnos?
+              </h4>
+              <ul className="space-y-2 text-gray-600">
+                <li className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-primary-500 rounded-full"></div>
+                  Consultas sobre denuncias existentes
+                </li>
+                <li className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-primary-500 rounded-full"></div>
+                  Soporte técnico de la plataforma
+                </li>
+                <li className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-primary-500 rounded-full"></div>
+                  Información sobre el proceso
+                </li>
+                <li className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-primary-500 rounded-full"></div>
+                  Reportar problemas o sugerencias
+                </li>
+              </ul>
+            </div>
+          </div>
