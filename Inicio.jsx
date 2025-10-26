@@ -57,3 +57,25 @@ export default function Inicio() {
             </Link>
           </div>
         </div>
+        <div className="text-center mb-16">
+          <h2 className="text-3xl font-bold text-black mb-6">Sistema de Denuncias Online</h2>
+          <p className="text-lg text-gray-700 mb-8 max-w-2xl mx-auto">
+            Plataforma segura y confiable para realizar denuncias de manera rápida y eficiente. 
+            Tu seguridad y privacidad son nuestra máxima prioridad.
+          </p>
+          
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-6">
+            <Link to="/denuncias/nueva" className="flex items-center gap-2 text-purple-600 hover:text-purple-800 font-medium">
+              <FaExclamationTriangle className="text-sm" />
+              Realizar Denuncia
+            </Link>
+            <Link to="/denuncias" className="flex items-center gap-2 text-purple-600 hover:text-purple-800 font-medium">
+              <FaCheckCircle className="text-sm" />
+              Ver Denuncias
+            </Link>
+          </div>
+          
+          <div className="flex justify-center">
+            <FaExclamationTriangle className="text-gray-400 text-2xl" />
+          </div>
+        </div>
