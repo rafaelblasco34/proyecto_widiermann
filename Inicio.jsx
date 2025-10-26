@@ -129,3 +129,17 @@ export default function Inicio() {
             </div>
           </div>
         </div>
+        <div className="text-center">
+          <h3 className="text-xl font-bold text-black mb-4">¿Cómo Funciona?</h3>
+          <p className="text-gray-700 mb-8">Proceso simple y transparente en solo 3 pasos</p>
+          
+          <div className="flex justify-center">
+            <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center text-black font-bold">
+              1
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
