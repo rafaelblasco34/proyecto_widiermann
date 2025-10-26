@@ -126,3 +126,78 @@ return (
               </ul>
             </div>
           </div>
+          {/* Contact Form */}
+          <div className="card">
+            <h3 className="text-2xl font-heading font-semibold mb-6 text-gray-800">
+              Envíanos un mensaje
+            </h3>
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
+                  <FaEnvelope className="text-primary-600" />
+                  Nombre completo
+                </label>
+                <input
+                  name="nombre"
+                  placeholder="Ingresa tu nombre completo"
+                  className="input-field"
+                  value={form.nombre}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
+                  <FaEnvelope className="text-primary-600" />
+                  Email
+                </label>
+                <input
+                  name="email"
+                  type="email"
+                  placeholder="tu@email.com"
+                  className="input-field"
+                  value={form.email}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
+                  <FaPaperPlane className="text-primary-600" />
+                  Mensaje
+                </label>
+                <textarea
+                  name="mensaje"
+                  placeholder="Escribe tu mensaje aquí..."
+                  className="input-field h-32 resize-none"
+                  value={form.mensaje}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              
+              <button 
+                className="btn btn-primary w-full text-lg py-4"
+                disabled={loading}
+              >
+                {loading ? (
+                  <>
+                    <div className="loading-spinner mr-2"></div>
+                    Enviando mensaje...
+                  </>
+                ) : (
+                  <>
+                    <FaPaperPlane className="mr-2" />
+                    Enviar Mensaje
+                  </>
+                )}
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
