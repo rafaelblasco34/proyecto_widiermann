@@ -134,5 +134,54 @@ export const crearUsuario = async (usuarioData) => {
     throw error;
   }
 };
+// Obtener denuncias por usuario
+export const obtenerDenunciasPorUsuario = async (userId) => {
+  try {
+    const denunciasRef = collection(db, 'denuncias');
+    const q = query(
+      denunciasRef, 
+      where('usuarioId', '==', userId),
+      orderBy('fecha', 'desc')
+    );
+    const querySnapshot = await getDocs(q);
+    
+    const denuncias = [];
+    querySnapshot.forEach((doc) => {
+      denuncias.push({
+        id: doc.id,
+        ...doc.data()
+      });
+    });
+    
+    return denuncias;
+  } catch (error) {
+    console.error('Error obteniendo denuncias por usuario:', error);
+    throw error;
+  }
+};
 
-
+// Obtener denuncias por estado
+export const obtenerDenunciasPorEstado = async (estado) => {
+  try {
+    const denunciasRef = collection(db, 'denuncias');
+    const q = query(
+      denunciasRef, 
+      where('estado', '==', estado),
+      orderBy('fecha', 'desc')
+    );
+    const querySnapshot = await getDocs(q);
+    
+    const denuncias = [];
+    querySnapshot.forEach((doc) => {
+      denuncias.push({
+        id: doc.id,
+        ...doc.data()
+      });
+    });
+    
+    return denuncias;
+  } catch (error) {
+    console.error('Error obteniendo denuncias por estado:', error);
+    throw error;
+  }
+};
