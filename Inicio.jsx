@@ -106,3 +106,26 @@ export default function Inicio() {
             </p>
           </div>
         </div>
+        <div className="text-center mb-16">
+          <h3 className="text-xl font-bold text-black mb-4">Nuestros Números</h3>
+          <p className="text-gray-700 mb-8">Miles de usuarios confían en nuestra plataforma</p>
+          
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-2xl mx-auto">
+            <div className="text-center">
+              <div className="text-2xl font-bold text-black mb-1">1,250+</div>
+              <div className="text-sm text-gray-600">Denuncias Procesadas</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-black mb-1">850+</div>
+              <div className="text-sm text-gray-600">Usuarios Activos</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-black mb-1">95%</div>
+              <div className="text-sm text-gray-600">Tasa de Resolución</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-black mb-1">24/7</div>
+              <div className="text-sm text-gray-600">Soporte Disponible</div>
+            </div>
+          </div>
+        </div>
