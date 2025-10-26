@@ -79,3 +79,13 @@ export default function Inicio() {
             <FaExclamationTriangle className="text-gray-400 text-2xl" />
           </div>
         </div>
+        <div className="space-y-12 mb-16">
+          <div className="text-center">
+            <h3 className="text-xl font-bold text-black mb-4">Denuncias Rápidas</h3>
+            <p className="text-gray-700 mb-4 max-w-md mx-auto">
+              Realiza tu denuncia de forma sencilla y segura con nuestro formulario intuitivo y fácil de usar.
+            </p>
+            <div className="flex justify-center">
+              <FaShieldAlt className="text-gray-400 text-2xl" />
+            </div>
+          </div>
