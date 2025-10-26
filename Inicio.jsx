@@ -89,3 +89,20 @@ export default function Inicio() {
               <FaShieldAlt className="text-gray-400 text-2xl" />
             </div>
           </div>
+          <div className="text-center">
+            <h3 className="text-xl font-bold text-black mb-4">Datos Protegidos</h3>
+            <p className="text-gray-700 mb-4 max-w-md mx-auto">
+              Tus datos están completamente seguros y protegidos con encriptación de nivel empresarial.
+            </p>
+            <div className="flex justify-center">
+              <FaBolt className="text-gray-400 text-2xl" />
+            </div>
+          </div>
+
+          <div className="text-center">
+            <h3 className="text-xl font-bold text-black mb-4">Respuesta Rápida</h3>
+            <p className="text-gray-700 mb-4 max-w-md mx-auto">
+              Procesamiento eficiente y seguimiento en tiempo real del estado de tu denuncia.
+            </p>
+          </div>
+        </div>
