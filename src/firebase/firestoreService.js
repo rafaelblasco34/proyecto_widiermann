@@ -185,3 +185,96 @@ export const obtenerDenunciasPorEstado = async (estado) => {
     throw error;
   }
 };
+// Subir imagen a Firebase Storage
+export const subirImagen = async (archivo, carpeta = 'denuncias') => {
+  try {
+    const nombreArchivo = ${Date.now()}_${archivo.name};
+    const imagenRef = ref(storage, ${carpeta}/${nombreArchivo});
+    
+    const snapshot = await uploadBytes(imagenRef, archivo);
+    const url = await getDownloadURL(snapshot.ref);
+    
+    return {
+      nombre: nombreArchivo,
+      url: url,
+      ruta: snapshot.ref.fullPath
+    };
+  } catch (error) {
+    console.error('Error subiendo imagen:', error);
+    throw error;
+  }
+};
+
+// Obtener ubicaciones
+export const obtenerUbicaciones = async () => {
+  try {
+    const ubicacionesRef = collection(db, 'ubicaciones');
+    const querySnapshot = await getDocs(ubicacionesRef);
+    
+    const ubicaciones = [];
+    querySnapshot.forEach((doc) => {
+      ubicaciones.push({
+        id: doc.id,
+        ...doc.data()
+      });
+    });
+    
+    return ubicaciones;
+  } catch (error) {
+    console.error('Error obteniendo ubicaciones:', error);
+    throw error;
+  }
+};
+
+// Crear ubicación
+export const crearUbicacion = async (ubicacionData) => {
+  try {
+    const ubicacionesRef = collection(db, 'ubicaciones');
+    const docRef = await addDoc(ubicacionesRef, {
+      ...ubicacionData,
+      fechaCreacion: new Date()
+    });
+    
+    return docRef.id;
+  } catch (error) {
+    console.error('Error creando ubicación:', error);
+    throw error;
+  }
+};
+
+// Obtener comisarias
+export const obtenerComisarias = async () => {
+  try {
+    const comisariasRef = collection(db, 'comisarias');
+    const querySnapshot = await getDocs(comisariasRef);
+    
+    const comisarias = [];
+    querySnapshot.forEach((doc) => {
+      comisarias.push({
+        id: doc.id,
+        ...doc.data()
+      });
+    });
+    
+    return comisarias;
+  } catch (error) {
+    console.error('Error obteniendo comisarias:', error);
+    throw error;
+  }
+};
+
+// Crear comisaria
+export const crearComisaria = async (comisariaData) => {
+  try {
+    const comisariasRef = collection(db, 'comisarias');
+    const docRef = await addDoc(comisariasRef, {
+      ...comisariaData,
+      fechaCreacion: new Date()
+    });
+    
+    return docRef.id;
+  } catch (error) {
+    console.error('Error creando comisaria:', error);
+    throw error;
+  }
+};
