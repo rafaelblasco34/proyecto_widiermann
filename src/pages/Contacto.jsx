@@ -48,3 +48,56 @@ return (
             </div>
           </div>
         )}
+<div className="grid lg:grid-cols-2 gap-12">
+          {/* Contact Information */}
+          <div className="space-y-8">
+            <div className="card">
+              <h3 className="text-2xl font-heading font-semibold mb-6 text-gray-800">
+                Información de Contacto
+              </h3>
+              <div className="space-y-6">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-gradient-to-r from-primary-500 to-primary-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <FaEnvelope className="text-white text-lg" />
+                  </div>
+                  <div>
+                    <p className="font-semibold text-gray-800 mb-1">Email</p>
+                    <p className="text-gray-600">contacto@denunciasonline.com</p>
+                    <p className="text-sm text-gray-500">Respuesta en 24 horas</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-gradient-to-r from-success-500 to-success-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <FaPhone className="text-white text-lg" />
+                  </div>
+                  <div>
+                    <p className="font-semibold text-gray-800 mb-1">Teléfono</p>
+                    <p className="text-gray-600">+54 11 1234-5678</p>
+                    <p className="text-sm text-gray-500">Lunes a Viernes 9:00-18:00</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-gradient-to-r from-warning-500 to-warning-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <FaMapMarkerAlt className="text-white text-lg" />
+                  </div>
+                  <div>
+                    <p className="font-semibold text-gray-800 mb-1">Dirección</p>
+                    <p className="text-gray-600">Av. Corrientes 1234, CABA</p>
+                    <p className="text-sm text-gray-500">Buenos Aires, Argentina</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-gradient-to-r from-accent-500 to-accent-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <FaClock className="text-white text-lg" />
+                  </div>
+                  <div>
+                    <p className="font-semibold text-gray-800 mb-1">Horarios de Atención</p>
+                    <p className="text-gray-600">Lunes a Viernes: 9:00 - 18:00</p>
+                    <p className="text-sm text-gray-500">Sábados: 9:00 - 13:00</p>
+                  </div>
+                </div>
+              </div>
+            </div>
