@@ -12,7 +12,7 @@ import {
 } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { db, storage } from './config.js';
-// Obtener todas las denuncias
+
 export const obtenerDenuncias = async () => {
   try {
     const denunciasRef = collection(db, 'denuncias');
@@ -52,7 +52,6 @@ export const obtenerDenuncia = async (id) => {
   }
 };
 
-// Crear nueva denuncia
 export const crearDenuncia = async (denunciaData) => {
   try {
     const denunciasRef = collection(db, 'denuncias');
@@ -70,7 +69,6 @@ export const crearDenuncia = async (denunciaData) => {
   }
 };
 
-// Actualizar denuncia
 export const actualizarDenuncia = async (id, datosActualizados) => {
   try {
     const denunciaRef = doc(db, 'denuncias', id);
@@ -85,8 +83,6 @@ export const actualizarDenuncia = async (id, datosActualizados) => {
     throw error;
   }
 };
-
-// Eliminar denuncia
 export const eliminarDenuncia = async (id) => {
   try {
     const denunciaRef = doc(db, 'denuncias', id);
@@ -98,6 +94,8 @@ export const eliminarDenuncia = async (id) => {
     throw error;
   }
 };
+
+
 export const obtenerUsuarios = async () => {
   try {
     const usuariosRef = collection(db, 'usuarios');
@@ -118,7 +116,6 @@ export const obtenerUsuarios = async () => {
   }
 };
 
-// Crear usuario
 export const crearUsuario = async (usuarioData) => {
   try {
     const usuariosRef = collection(db, 'usuarios');
@@ -134,7 +131,7 @@ export const crearUsuario = async (usuarioData) => {
     throw error;
   }
 };
-// Obtener denuncias por usuario
+
 export const obtenerDenunciasPorUsuario = async (userId) => {
   try {
     const denunciasRef = collection(db, 'denuncias');
@@ -160,7 +157,7 @@ export const obtenerDenunciasPorUsuario = async (userId) => {
   }
 };
 
-// Obtener denuncias por estado
+
 export const obtenerDenunciasPorEstado = async (estado) => {
   try {
     const denunciasRef = collection(db, 'denuncias');
@@ -185,11 +182,12 @@ export const obtenerDenunciasPorEstado = async (estado) => {
     throw error;
   }
 };
-// Subir imagen a Firebase Storage
+
+
 export const subirImagen = async (archivo, carpeta = 'denuncias') => {
   try {
-    const nombreArchivo = ${Date.now()}_${archivo.name};
-    const imagenRef = ref(storage, ${carpeta}/${nombreArchivo});
+    const nombreArchivo = `${Date.now()}_${archivo.name}`;
+    const imagenRef = ref(storage, `${carpeta}/${nombreArchivo}`);
     
     const snapshot = await uploadBytes(imagenRef, archivo);
     const url = await getDownloadURL(snapshot.ref);
@@ -205,7 +203,7 @@ export const subirImagen = async (archivo, carpeta = 'denuncias') => {
   }
 };
 
-// Obtener ubicaciones
+
 export const obtenerUbicaciones = async () => {
   try {
     const ubicacionesRef = collection(db, 'ubicaciones');
@@ -226,7 +224,7 @@ export const obtenerUbicaciones = async () => {
   }
 };
 
-// Crear ubicación
+
 export const crearUbicacion = async (ubicacionData) => {
   try {
     const ubicacionesRef = collection(db, 'ubicaciones');
@@ -242,7 +240,7 @@ export const crearUbicacion = async (ubicacionData) => {
   }
 };
 
-// Obtener comisarias
+
 export const obtenerComisarias = async () => {
   try {
     const comisariasRef = collection(db, 'comisarias');
@@ -263,7 +261,7 @@ export const obtenerComisarias = async () => {
   }
 };
 
-// Crear comisaria
+
 export const crearComisaria = async (comisariaData) => {
   try {
     const comisariasRef = collection(db, 'comisarias');

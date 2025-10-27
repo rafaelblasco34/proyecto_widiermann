@@ -139,3 +139,4 @@ proyecto_widiermann/
 ├── package.json                 # Dependencias
 ├── tailwind.config.jsx          # Configuración Tailwind
 └── README.md                    # 
+-------------------------------------

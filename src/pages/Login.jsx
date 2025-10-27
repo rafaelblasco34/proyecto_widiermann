@@ -1,14 +1,15 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext.jsx";
+import { FaUser, FaLock, FaSignInAlt, FaEye, FaEyeSlash } from "react-icons/fa";
 
 export default function Login() {
   const [form, setForm] = useState({ username: "", password: "" });
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const { login } = useAuth();
-}
 
   const validateForm = () => {
     const newErrors = {};
@@ -51,71 +52,110 @@ export default function Login() {
     }
   };
 
-    return (
+  return (
     <div className="container-page">
-      <form onSubmit={handleSubmit} className="card space-y-4 max-w-md mx-auto">
-        <h2 className="text-xl font-semibold">Ingresar</h2>
-        
-        {errors.general && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
-            {errors.general}
+      <div className="max-w-md mx-auto">
+        <div className="text-center mb-8">
+          <div className="w-20 h-20 bg-gradient-to-r from-primary-600 to-primary-700 rounded-2xl flex items-center justify-center mx-auto mb-6">
+            <FaSignInAlt className="text-white text-3xl" />
           </div>
-        )}
-        
-        <div>
-          <input 
-            name="username" 
-            placeholder="Usuario" 
-            className={`w-full border p-2 rounded-xl ${errors.username ? 'border-red-500' : ''}`}
-            value={form.username} 
-            onChange={handleChange}
-            disabled={loading}
-          />
-          {errors.username && <p className="text-red-600 text-sm mt-1">{errors.username}</p>}
+          <h2 className="text-3xl font-heading font-bold text-gray-800 mb-2">
+            Iniciar Sesión
+          </h2>
+          <p className="text-gray-600">
+            Accede a tu cuenta para gestionar tus denuncias
+          </p>
         </div>
 
-        <div>
-          <input 
-            type="password" 
-            name="password" 
-            placeholder="Contraseña" 
-            className={`w-full border p-2 rounded-xl ${errors.password ? 'border-red-500' : ''}`}
-            value={form.password} 
-            onChange={handleChange}
-            disabled={loading}
-          />
-          {errors.password && <p className="text-red-600 text-sm mt-1">{errors.password}</p>}
-        </div>
-
-        <button 
-          className="btn btn-primary w-full"
-          disabled={loading}
-        >
-          {loading ? (
-            <>
-              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2 inline-block"></div>
-              Iniciando sesión...
-            </>
-          ) : (
-            'Entrar'
+        <form onSubmit={handleSubmit} className="card space-y-6">
+          {errors.general && (
+            <div className="bg-accent-50 border border-accent-200 text-accent-700 px-4 py-3 rounded-xl flex items-center gap-2">
+              <div className="w-5 h-5 rounded-full bg-accent-500 flex items-center justify-center">
+                <span className="text-white text-xs font-bold">!</span>
+              </div>
+              {errors.general}
+            </div>
           )}
-        </button>
-        
-        <p className="text-sm opacity-70 text-center">
-          Los usuarios se obtienen desde Firebase
-        </p>
-        
-        <p className="text-sm text-center opacity-70">
-          ¿No tienes cuenta?{" "}
+          
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
+              <FaUser className="text-primary-600" />
+              Usuario
+            </label>
+            <input 
+              name="username" 
+              placeholder="Ingresa tu usuario" 
+              className={`input-field ${errors.username ? 'input-error' : ''}`}
+              value={form.username} 
+              onChange={handleChange}
+              disabled={loading}
+            />
+            {errors.username && <p className="error-message">{errors.username}</p>}
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
+              <FaLock className="text-primary-600" />
+              Contraseña
+            </label>
+            <div className="relative">
+              <input 
+                type={showPassword ? "text" : "password"}
+                name="password" 
+                placeholder="Ingresa tu contraseña" 
+                className={`input-field pr-12 ${errors.password ? 'input-error' : ''}`}
+                value={form.password} 
+                onChange={handleChange}
+                disabled={loading}
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                disabled={loading}
+              >
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </button>
+            </div>
+            {errors.password && <p className="error-message">{errors.password}</p>}
+          </div>
+
           <button 
-            type="button" 
-            onClick={() => navigate("/registro")}
-            className="text-blue-600 hover:underline"
+            className="btn btn-primary w-full text-lg py-4"
             disabled={loading}
           >
-            Crear cuenta
+            {loading ? (
+              <>
+                <div className="loading-spinner mr-2"></div>
+                Iniciando sesión...
+              </>
+            ) : (
+              <>
+                <FaSignInAlt className="mr-2" />
+                Iniciar Sesión
+              </>
+            )}
           </button>
-        </p>
-      </form>
+          
+          <div className="text-center">
+            <p className="text-sm text-gray-500 mb-4">
+              Los usuarios se obtienen desde Firebase
+            </p>
+            
+            <p className="text-sm text-gray-600">
+              ¿No tienes cuenta?{" "}
+              <button 
+                type="button" 
+                onClick={() => navigate("/registro")}
+                className="text-primary-600 hover:text-primary-700 font-medium hover:underline transition-colors"
+                disabled={loading}
+              >
+                Crear cuenta
+              </button>
+            </p>
+          </div>
+        </form>
+      </div>
     </div>
   );
+}

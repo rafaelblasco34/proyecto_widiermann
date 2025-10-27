@@ -7,6 +7,7 @@ export default function Denuncias() {
   const [denuncias, setDenuncias] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
   useEffect(() => {
     const cargarDenuncias = async () => {
       try {
@@ -22,7 +23,8 @@ export default function Denuncias() {
     };
     cargarDenuncias();
   }, []);
-    const getEstadoColor = (estado) => {
+
+  const getEstadoColor = (estado) => {
     switch (estado) {
       case "Resuelto":
         return "status-resolved";
@@ -47,7 +49,8 @@ export default function Denuncias() {
         return <FaClock className="text-gray-600" />;
     }
   };
-    if (loading) {
+
+  if (loading) {
     return (
       <div className="container-page">
         <div className="text-center py-20">
@@ -80,7 +83,8 @@ export default function Denuncias() {
       </div>
     );
   }
-    return (
+
+  return (
     <div className="container-page">
       <div className="space-y-8">
         <div className="text-center">
@@ -91,7 +95,8 @@ export default function Denuncias() {
             Consulta el estado y seguimiento de todas las denuncias
           </p>
         </div>
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           <div className="card text-center">
             <div className="text-3xl font-bold text-primary-600 mb-2">{denuncias.length}</div>
             <div className="text-gray-600 font-medium">Total Denuncias</div>
@@ -115,7 +120,8 @@ export default function Denuncias() {
             <div className="text-gray-600 font-medium">En Investigación</div>
           </div>
         </div>
-                <div className="space-y-4">
+
+        <div className="space-y-4">
           {denuncias.map((denuncia, index) => (
             <div 
               key={denuncia.id} 

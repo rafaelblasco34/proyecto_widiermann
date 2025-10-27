@@ -127,7 +127,7 @@ const LoginForm = () => {
             <Title>Login</Title>
             <Form onSubmit={handleSubmit}>
                 <InputGroup>
-                    <Label htmlFor="username">Username</Label>
+                    <Label htmlFor="username">Nombre de Usuario</Label>
                     <Input 
                         type="text"
                         id="username"
@@ -139,7 +139,7 @@ const LoginForm = () => {
                 </InputGroup>
 
                 <InputGroup>
-                    <Label htmlFor="password">Password</Label>
+                    <Label htmlFor="password">Contraseña</Label>
                     <Input 
                         type="password"
                         id="password"
@@ -158,16 +158,16 @@ const LoginForm = () => {
                         checked={formData.rememberMe}
                         onChange={handleChange}
                     />
-                    <label htmlFor="rememberMe">Remember Me</label>
+                    <label htmlFor="rememberMe">Recuerdame</label>
                 </RememberMe>
 
                 <LoginButton type="submit">LOGIN</LoginButton>
                 
-                <ForgotPassword href="#">Forgot your password?</ForgotPassword>
+                <ForgotPassword href="#">Olvidaste tu Contraseña??</ForgotPassword>
             </Form>
             
             <SignUpText>
-                New here? <a href="#">Sign Up</a>
+                Eres Nuevo aqui? <a href="#">Registrate</a>
             </SignUpText>
         </FormContainer>
     );

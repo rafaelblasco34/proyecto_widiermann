@@ -1,0 +1,16 @@
+.test-tailwind {
+  background-color: #3b82f6 !important;
+  color: white !important;
+  padding: 1rem !important;
+  border-radius: 0.5rem !important;
+}
+
+.test-tailwind h1 {
+  font-size: 1.5rem !important;
+  font-weight: bold !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.test-tailwind p {
+  font-size: 1.125rem !important;
+}

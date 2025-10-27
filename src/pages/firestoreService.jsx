@@ -3,13 +3,11 @@ import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc } 
 import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
 
 const firebaseConfig = {
-  // Tu configuración de Firebase aquí
 };
 
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 export const storage = getStorage(app);
-// Funciones para denuncias con imágenes
 export const obtenerDenuncias = async () => {
   try {
     const querySnapshot = await getDocs(collection(db, "denuncias"));
@@ -64,7 +62,7 @@ export const eliminarDenuncia = async (id) => {
     throw error;
   }
 };
-// Funciones para usuarios
+
 export const obtenerUsuarios = async () => {
   try {
     const querySnapshot = await getDocs(collection(db, "usuarios"));
@@ -115,7 +113,7 @@ export const eliminarUsuario = async (id) => {
     throw error;
   }
 };
-// Funciones para subir imágenes
+
 export const subirImagen = async (archivo, carpeta = 'denuncias') => {
   try {
     const nombreArchivo = `${Date.now()}_${archivo.name}`;
@@ -145,7 +143,6 @@ export const eliminarImagen = async (rutaImagen) => {
   }
 };
 
-// Funciones para ubicaciones
 export const obtenerUbicaciones = async () => {
   try {
     const querySnapshot = await getDocs(collection(db, "ubicaciones"));

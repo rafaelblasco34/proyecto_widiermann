@@ -12,21 +12,22 @@ export default function Contacto() {
     e.preventDefault();
     setLoading(true);
     
-    // Simulate API call
+  
     setTimeout(() => {
       setLoading(false);
       setSubmitted(true);
       console.log("CONTACTO:", form);
       setForm({ nombre: "", email: "", mensaje: "" });
       
-      // Reset success message after 3 seconds
+    
       setTimeout(() => setSubmitted(false), 3000);
     }, 1000);
   };
-return (
+
+  return (
     <div className="container-page">
       <div className="max-w-6xl mx-auto">
-        {/* Header */}
+    
         <div className="text-center mb-12">
           <h1 className="text-4xl font-heading font-bold gradient-text mb-4">
             Contacto
@@ -36,7 +37,7 @@ return (
           </p>
         </div>
 
-        {/* Success Message */}
+      
         {submitted && (
           <div className="card bg-success-50 border-success-200 mb-8">
             <div className="flex items-center gap-3">
@@ -48,8 +49,9 @@ return (
             </div>
           </div>
         )}
-<div className="grid lg:grid-cols-2 gap-12">
-          {/* Contact Information */}
+
+        <div className="grid lg:grid-cols-2 gap-12">
+        
           <div className="space-y-8">
             <div className="card">
               <h3 className="text-2xl font-heading font-semibold mb-6 text-gray-800">
@@ -73,7 +75,7 @@ return (
                   </div>
                   <div>
                     <p className="font-semibold text-gray-800 mb-1">Teléfono</p>
-                    <p className="text-gray-600">+54 11 1234-5678</p>
+                    <p className="text-gray-600">+54 299 428 0141</p>
                     <p className="text-sm text-gray-500">Lunes a Viernes 9:00-18:00</p>
                   </div>
                 </div>
@@ -84,8 +86,8 @@ return (
                   </div>
                   <div>
                     <p className="font-semibold text-gray-800 mb-1">Dirección</p>
-                    <p className="text-gray-600">Av. Corrientes 1234, CABA</p>
-                    <p className="text-sm text-gray-500">Buenos Aires, Argentina</p>
+                    <p className="text-gray-600">Lanin 2020 Neuquen, Capital</p>
+                    <p className="text-sm text-gray-500">Neuquen, Argentina</p>
                   </div>
                 </div>
                 
@@ -101,7 +103,7 @@ return (
                 </div>
               </div>
             </div>
-            {/* Additional Info Card */}
+
             <div className="card bg-gradient-to-r from-primary-50 to-primary-100 border-primary-200">
               <h4 className="font-heading font-semibold text-gray-800 mb-3">
                 ¿Por qué contactarnos?
@@ -126,7 +128,7 @@ return (
               </ul>
             </div>
           </div>
-          {/* Contact Form */}
+
           <div className="card">
             <h3 className="text-2xl font-heading font-semibold mb-6 text-gray-800">
               Envíanos un mensaje

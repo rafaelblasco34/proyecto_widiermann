@@ -58,7 +58,7 @@ const AltaDato = ({ onDenunciaAgregada }) => {
     
     for (const archivo of archivos) {
       if (archivo.size > 5 * 1024 * 1024) { // 5MB límite
-        setMensaje("La imagen ${archivo.name} es muy grande. Máximo 5MB.");
+        setMensaje(`La imagen ${archivo.name} es muy grande. Máximo 5MB.`);
         continue;
       }
 
@@ -69,7 +69,7 @@ const AltaDato = ({ onDenunciaAgregada }) => {
         setImagenes(prev => [...prev, imagenData]);
       } catch (error) {
         console.error("Error al subir imagen:", error);
-        setMensaje("Error al subir ${archivo.name}");
+        setMensaje(`Error al subir ${archivo.name}`);
       } finally {
         setImagenesSubiendo(prev => prev.filter(nombre => nombre !== archivo.name));
       }
@@ -82,8 +82,6 @@ const AltaDato = ({ onDenunciaAgregada }) => {
 
    const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    // Validación básica
     if (!formData.titulo.trim()) {
       setMensaje('El título es obligatorio');
       return;
@@ -129,7 +127,7 @@ const AltaDato = ({ onDenunciaAgregada }) => {
       setMensaje('Denuncia registrada exitosamente');
       console.log('Denuncia creada con ID:', id);
       
-      // Limpiar formulario
+
       setFormData({
         titulo: '',
         descripcion: '',
@@ -141,7 +139,7 @@ const AltaDato = ({ onDenunciaAgregada }) => {
       });
       setImagenes([]);
 
-          // Notificar al componente padre si existe la función
+         
       if (onDenunciaAgregada) {
         onDenunciaAgregada();
       }
@@ -354,7 +352,7 @@ const AltaDato = ({ onDenunciaAgregada }) => {
                   <div key={index} className="relative">
                     <img 
                       src={imagen.url} 
-                      alt={Imagen ${index + 1}}
+                      alt={`Imagen ${index + 1}`}
                       className="w-full h-24 object-cover rounded border"
                     />
                     <button

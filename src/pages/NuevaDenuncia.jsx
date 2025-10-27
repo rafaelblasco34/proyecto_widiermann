@@ -17,7 +17,6 @@ export default function NuevaDenuncia() {
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-}
 
   const validateForm = () => {
     const newErrors = {};
@@ -114,7 +113,7 @@ export default function NuevaDenuncia() {
     }
   };
 
-    return (
+  return (
     <div className="container-page">
       <form onSubmit={handleSubmit} className="card space-y-4 max-w-2xl mx-auto">
         <h2 className="text-xl font-semibold">Nueva denuncia</h2>
@@ -312,3 +311,4 @@ export default function NuevaDenuncia() {
       </form>
     </div>
   );
+}

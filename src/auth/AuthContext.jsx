@@ -13,7 +13,6 @@ export function AuthProvider({ children }) {
         const saved = localStorage.getItem("user");
         if (saved) {
           const usuarioGuardado = JSON.parse(saved);
-          // Verificar que el usuario aún existe en Firebase
           const usuarios = await obtenerUsuarios();
           const usuarioValido = usuarios.find(u => 
             u.id === usuarioGuardado.id && 
@@ -24,7 +23,7 @@ export function AuthProvider({ children }) {
              if (usuarioValido) {
             setUser(usuarioGuardado);
           } else {
-            // Usuario ya no existe o está inactivo, limpiar localStorage
+            
             localStorage.removeItem("user");
           }
         }
@@ -43,10 +42,10 @@ export function AuthProvider({ children }) {
     try {
       setLoading(true);
       
-      // Obtener usuarios desde Firebase
+  
       const usuarios = await obtenerUsuarios();
       
-      // Buscar usuario por username y password
+
       const found = usuarios.find(u => 
         u.username === username && 
         u.password === password && 
@@ -57,7 +56,7 @@ export function AuthProvider({ children }) {
         throw new Error("Credenciales inválidas o usuario inactivo");
       }
       
-      // Crear objeto de usuario para el contexto
+     
       const usuarioSesion = { 
         id: found.id,
         username: found.username, 
@@ -92,7 +91,6 @@ export function AuthProvider({ children }) {
     }
   };
 
-   // Mostrar loading mientras se verifica la sesión
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
