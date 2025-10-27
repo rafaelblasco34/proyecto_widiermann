@@ -1,91 +1,199 @@
 import { useState } from "react";
+import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaClock, FaPaperPlane, FaCheckCircle } from "react-icons/fa";
 
 export default function Contacto() {
   const [form, setForm] = useState({ nombre: "", email: "", mensaje: "" });
+  const [loading, setLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
   const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value });
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    alert("Mensaje enviado correctamente. Te contactaremos pronto.");
-    console.log("CONTACTO:", form);
-    setForm({ nombre: "", email: "", mensaje: "" });
+    setLoading(true);
+    
+    // Simulate API call
+    setTimeout(() => {
+      setLoading(false);
+      setSubmitted(true);
+      console.log("CONTACTO:", form);
+      setForm({ nombre: "", email: "", mensaje: "" });
+      
+      // Reset success message after 3 seconds
+      setTimeout(() => setSubmitted(false), 3000);
+    }, 1000);
   };
-
-  return (
+return (
     <div className="container-page">
-      <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-800">Contacto</h1>
-          <p className="text-gray-600 mt-2">¿Tienes alguna consulta? Contáctanos</p>
+      <div className="max-w-6xl mx-auto">
+        {/* Header */}
+        <div className="text-center mb-12">
+          <h1 className="text-4xl font-heading font-bold gradient-text mb-4">
+            Contacto
+          </h1>
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            ¿Tienes alguna consulta? Estamos aquí para ayudarte
+          </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8">
-          <div className="space-y-6">
+        {/* Success Message */}
+        {submitted && (
+          <div className="card bg-success-50 border-success-200 mb-8">
+            <div className="flex items-center gap-3">
+              <FaCheckCircle className="text-success-600 text-2xl" />
+              <div>
+                <h3 className="font-semibold text-success-800">¡Mensaje enviado!</h3>
+                <p className="text-success-700">Te contactaremos pronto.</p>
+              </div>
+            </div>
+          </div>
+        )}
+<div className="grid lg:grid-cols-2 gap-12">
+          {/* Contact Information */}
+          <div className="space-y-8">
             <div className="card">
-              <h3 className="text-xl font-semibold mb-4">Información de Contacto</h3>
-              <div className="space-y-4">
-                <div className="flex items-center">
-                  <div className="text-2xl mr-3">📧</div>
+              <h3 className="text-2xl font-heading font-semibold mb-6 text-gray-800">
+                Información de Contacto
+              </h3>
+              <div className="space-y-6">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-gradient-to-r from-primary-500 to-primary-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <FaEnvelope className="text-white text-lg" />
+                  </div>
                   <div>
-                    <p className="font-medium">Email</p>
+                    <p className="font-semibold text-gray-800 mb-1">Email</p>
                     <p className="text-gray-600">contacto@denunciasonline.com</p>
+                    <p className="text-sm text-gray-500">Respuesta en 24 horas</p>
                   </div>
                 </div>
-                <div className="flex items-center">
-                  <div className="text-2xl mr-3">📞</div>
+                
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-gradient-to-r from-success-500 to-success-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <FaPhone className="text-white text-lg" />
+                  </div>
                   <div>
-                    <p className="font-medium">Teléfono</p>
+                    <p className="font-semibold text-gray-800 mb-1">Teléfono</p>
                     <p className="text-gray-600">+54 11 1234-5678</p>
+                    <p className="text-sm text-gray-500">Lunes a Viernes 9:00-18:00</p>
                   </div>
                 </div>
-                <div className="flex items-center">
-                  <div className="text-2xl mr-3">📍</div>
+                
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-gradient-to-r from-warning-500 to-warning-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <FaMapMarkerAlt className="text-white text-lg" />
+                  </div>
                   <div>
-                    <p className="font-medium">Dirección</p>
+                    <p className="font-semibold text-gray-800 mb-1">Dirección</p>
                     <p className="text-gray-600">Av. Corrientes 1234, CABA</p>
+                    <p className="text-sm text-gray-500">Buenos Aires, Argentina</p>
                   </div>
                 </div>
-                <div className="flex items-center">
-                  <div className="text-2xl mr-3">🕒</div>
+                
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-gradient-to-r from-accent-500 to-accent-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <FaClock className="text-white text-lg" />
+                  </div>
                   <div>
-                    <p className="font-medium">Horarios</p>
+                    <p className="font-semibold text-gray-800 mb-1">Horarios de Atención</p>
                     <p className="text-gray-600">Lunes a Viernes: 9:00 - 18:00</p>
+                    <p className="text-sm text-gray-500">Sábados: 9:00 - 13:00</p>
                   </div>
                 </div>
               </div>
             </div>
+            {/* Additional Info Card */}
+            <div className="card bg-gradient-to-r from-primary-50 to-primary-100 border-primary-200">
+              <h4 className="font-heading font-semibold text-gray-800 mb-3">
+                ¿Por qué contactarnos?
+              </h4>
+              <ul className="space-y-2 text-gray-600">
+                <li className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-primary-500 rounded-full"></div>
+                  Consultas sobre denuncias existentes
+                </li>
+                <li className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-primary-500 rounded-full"></div>
+                  Soporte técnico de la plataforma
+                </li>
+                <li className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-primary-500 rounded-full"></div>
+                  Información sobre el proceso
+                </li>
+                <li className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-primary-500 rounded-full"></div>
+                  Reportar problemas o sugerencias
+                </li>
+              </ul>
+            </div>
           </div>
-
+          {/* Contact Form */}
           <div className="card">
-            <h3 className="text-xl font-semibold mb-4">Envíanos un mensaje</h3>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <input
-                name="nombre"
-                placeholder="Tu nombre"
-                className="w-full border p-3 rounded-xl"
-                value={form.nombre}
-                onChange={handleChange}
-                required
-              />
-              <input
-                name="email"
-                type="email"
-                placeholder="Tu email"
-                className="w-full border p-3 rounded-xl"
-                value={form.email}
-                onChange={handleChange}
-                required
-              />
-              <textarea
-                name="mensaje"
-                placeholder="Tu mensaje"
-                className="w-full border p-3 rounded-xl h-32"
-                value={form.mensaje}
-                onChange={handleChange}
-                required
-              />
-              <button className="btn btn-primary w-full">Enviar mensaje</button>
+            <h3 className="text-2xl font-heading font-semibold mb-6 text-gray-800">
+              Envíanos un mensaje
+            </h3>
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
+                  <FaEnvelope className="text-primary-600" />
+                  Nombre completo
+                </label>
+                <input
+                  name="nombre"
+                  placeholder="Ingresa tu nombre completo"
+                  className="input-field"
+                  value={form.nombre}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
+                  <FaEnvelope className="text-primary-600" />
+                  Email
+                </label>
+                <input
+                  name="email"
+                  type="email"
+                  placeholder="tu@email.com"
+                  className="input-field"
+                  value={form.email}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
+                  <FaPaperPlane className="text-primary-600" />
+                  Mensaje
+                </label>
+                <textarea
+                  name="mensaje"
+                  placeholder="Escribe tu mensaje aquí..."
+                  className="input-field h-32 resize-none"
+                  value={form.mensaje}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              
+              <button 
+                className="btn btn-primary w-full text-lg py-4"
+                disabled={loading}
+              >
+                {loading ? (
+                  <>
+                    <div className="loading-spinner mr-2"></div>
+                    Enviando mensaje...
+                  </>
+                ) : (
+                  <>
+                    <FaPaperPlane className="mr-2" />
+                    Enviar Mensaje
+                  </>
+                )}
+              </button>
             </form>
           </div>
         </div>
