@@ -116,13 +116,27 @@ export const obtenerUsuarios = async () => {
   }
 };
 
+export const verificarUsuarioExistente = async (username, email) => {
+  try {
+    const usuarios = await obtenerUsuarios();
+    const usuarioExistente = usuarios.find(
+      u => u.username === username || u.email === email
+    );
+    return usuarioExistente !== undefined;
+  } catch (error) {
+    console.error('Error verificando usuario existente:', error);
+    throw error;
+  }
+};
+
 export const crearUsuario = async (usuarioData) => {
   try {
     const usuariosRef = collection(db, 'usuarios');
     const docRef = await addDoc(usuariosRef, {
       ...usuarioData,
       fechaCreacion: new Date(),
-      activo: true
+      activo: true,
+      rol: usuarioData.rol || 'usuario'
     });
     
     return docRef.id;
