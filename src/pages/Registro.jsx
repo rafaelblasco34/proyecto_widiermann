@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaUser, FaEnvelope, FaLock, FaUserPlus, FaEye, FaEyeSlash } from "react-icons/fa";
+import { crearUsuario, obtenerUsuarios } from "../firebase/firestoreService.js";
 
 export default function Registro() {
   const [form, setForm] = useState({ 
@@ -67,18 +68,78 @@ export default function Registro() {
     }
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
     
-    if (validateForm()) {
+    if (!validateForm()) {
+      return;
+    }
+
+    try {
       setLoading(true);
-      // Simulate API call
-      setTimeout(() => {
-        alert("Registro exitoso. Ya puedes iniciar sesión.");
-        console.log("REGISTRO:", form);
+      setErrors({});
+
+      // Verificar si el usuario ya existe
+      const usuarios = await obtenerUsuarios();
+      const usuarioExistente = usuarios.find(
+        u => u.username === form.username || u.email === form.email
+      );
+
+      if (usuarioExistente) {
+        if (usuarioExistente.username === form.username) {
+          setErrors({ general: "Este nombre de usuario ya está en uso" });
+        } else {
+          setErrors({ general: "Este email ya está registrado" });
+        }
         setLoading(false);
-        navigate("/login");
-      }, 1000);
+        return;
+      }
+
+      // Crear el usuario en Firebase
+      const usuarioData = {
+        nombre: form.nombre.trim(),
+        email: form.email.trim().toLowerCase(),
+        username: form.username.trim(),
+        password: form.password, // En producción deberías hashearla
+        rol: 'usuario' // Rol por defecto
+      };
+
+      await crearUsuario(usuarioData);
+      
+      alert("¡Registro exitoso! Ya puedes iniciar sesión.");
+      console.log("Usuario registrado en Firebase:", usuarioData);
+      navigate("/login");
+    } catch (error) {
+      console.error("Error completo al registrar usuario:", error);
+      console.error("Error code:", error.code);
+      console.error("Error message:", error.message);
+      console.error("Error stack:", error.stack);
+      
+      let errorMessage = "Error al crear la cuenta. Por favor, intenta nuevamente.";
+      if (error.code) {
+        switch(error.code) {
+          case 'permission-denied':
+            errorMessage = "Permiso denegado. Verifica las reglas de Firestore en Firebase Console.";
+            break;
+          case 'unavailable':
+            errorMessage = "Firebase no está disponible. Verifica tu conexión a internet.";
+            break;
+          case 'failed-precondition':
+            errorMessage = "Firestore no está disponible. Verifica que Firestore esté habilitado en Firebase Console.";
+            break;
+          case 'already-exists':
+            errorMessage = "Este usuario ya existe. Intenta con otro nombre de usuario o email.";
+            break;
+          default:
+            errorMessage = `Error de Firebase: ${error.code}. ${error.message}`;
+        }
+      } else if (error.message) {
+        errorMessage = error.message;
+      }
+      
+      setErrors({ general: errorMessage });
+    } finally {
+      setLoading(false);
     }
   };
 

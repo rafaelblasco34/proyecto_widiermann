@@ -255,13 +255,6 @@ src/
 
 ## 📊 Performance
 
-### Métricas de Rendimiento
-
-- **First Contentful Paint**: < 1.5s
-- **Largest Contentful Paint**: < 2.5s
-- **Cumulative Layout Shift**: < 0.1
-- **First Input Delay**: < 100ms
-
 ### Optimizaciones Implementadas
 
 - ✅ **Code Splitting** con React.lazy()
@@ -269,8 +262,6 @@ src/
 - ✅ **Bundle Analysis** con webpack-bundle-analyzer
 - ✅ **Service Workers** para caching
 - ✅ **Tree Shaking** para eliminar código no usado
-
-## 🔒 Seguridad
 
 ### Medidas de Seguridad
 
@@ -295,10 +286,6 @@ src/
 - **v1.2.0** - Nuevas funcionalidades (Diciembre 2025)
 
 
-**Screenshots**
-Si aplica, agrega screenshots.
-
-
 ## 📞 Soporte
 
 - **Email**: soporte@denunciasonline.com
@@ -319,3 +306,5 @@ Si aplica, agrega screenshots.
 -**Ciro Tardugno**
 -**Santino Reynoso**
 ---
+![alt text](image-5.png)
+![alt text](image-6.png)

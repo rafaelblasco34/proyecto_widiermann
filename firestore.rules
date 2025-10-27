@@ -1,0 +1,47 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Reglas para la colección de usuarios
+    match /usuarios/{usuarioId} {
+      // Permitir lectura a todos
+      allow read: if true;
+      
+      // Permitir escritura a todos (para el registro público)
+      allow write: if true;
+      
+      // Permitir actualización solo al propio usuario
+      allow update, delete: if request.auth != null && request.auth.uid == usuarioId;
+    }
+    
+    // Reglas para la colección de denuncias
+    match /denuncias/{denunciaId} {
+      // Permitir lectura a todos los usuarios autenticados
+      allow read: if true;
+      
+      // Permitir creación de denuncias a todos
+      allow create: if true;
+      
+      // Permitir actualización solo al creador o administradores
+      allow update, delete: if request.auth != null;
+    }
+    
+    // Reglas para la colección de ubicaciones
+    match /ubicaciones/{ubicacionId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+    
+    // Reglas para la colección de comisarias
+    match /comisarias/{comisariaId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+    
+    // Para cualquier otra colección, negar acceso por defecto
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
+
