@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { crearDenuncia, subirImagen, obtenerUbicaciones } from "../firebase/firestoreService.js";
+import { crearDenuncia, subirImagen, obtenerUbicaciones, subirImagenConProgreso } from "../firebase/firestoreService.js";
 
 export default function NuevaDenuncia() {
   const [form, setForm] = useState({ 
@@ -14,6 +14,7 @@ export default function NuevaDenuncia() {
   });
   const [imagenes, setImagenes] = useState([]);
   const [imagenesSubiendo, setImagenesSubiendo] = useState([]);
+  const [uploadProgress, setUploadProgress] = useState({}); // { nombreArchivo: porcentaje }
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -62,7 +63,7 @@ export default function NuevaDenuncia() {
     const archivos = Array.from(e.target.files);
     
     for (const archivo of archivos) {
-      if (archivo.size > 5 * 1024 * 1024) { // 5MB límite
+      if (archivo.size > 5 * 1024 * 1024) { 
         alert(`La imagen ${archivo.name} es muy grande. Máximo 5MB.`);
         continue;
       }
@@ -70,13 +71,19 @@ export default function NuevaDenuncia() {
       setImagenesSubiendo(prev => [...prev, archivo.name]);
       
       try {
-        const imagenData = await subirImagen(archivo);
+        const imagenData = await subirImagenConProgreso(archivo, (percent) => {
+          setUploadProgress(prev => ({ ...prev, [archivo.name]: percent }));
+        });
         setImagenes(prev => [...prev, imagenData]);
       } catch (error) {
         console.error("Error al subir imagen:", error);
         alert(`Error al subir ${archivo.name}`);
       } finally {
         setImagenesSubiendo(prev => prev.filter(nombre => nombre !== archivo.name));
+        setUploadProgress(prev => {
+          const { [archivo.name]: _, ...rest } = prev;
+          return rest;
+        });
       }
     }
   };
@@ -235,10 +242,21 @@ export default function NuevaDenuncia() {
           />
           
           {imagenesSubiendo.length > 0 && (
-            <div className="mt-2">
-              <p className="text-sm text-blue-600">Subiendo imágenes...</p>
-              {imagenesSubiendo.map((nombre, index) => (
-                <p key={index} className="text-xs text-gray-500">• {nombre}</p>
+            <div className="mt-2 space-y-2">
+              <p className="text-sm text-blue-700 font-medium">Subiendo imágenes...</p>
+              {imagenesSubiendo.map((nombre) => (
+                <div key={nombre} className="">
+                  <div className="flex justify-between text-xs text-gray-600 mb-1">
+                    <span className="truncate max-w-[70%]">{nombre}</span>
+                    <span>{uploadProgress[nombre] ? `${uploadProgress[nombre]}%` : '0%'}</span>
+                  </div>
+                  <div className="w-full bg-gray-200 rounded h-2 overflow-hidden">
+                    <div
+                      className="bg-primary h-2 rounded"
+                      style={{ width: `${uploadProgress[nombre] || 0}%` }}
+                    />
+                  </div>
+                </div>
               ))}
             </div>
           )}
@@ -276,10 +294,16 @@ export default function NuevaDenuncia() {
             required
           >
             <option value="">Seleccionar comisaría</option>
-            <option value="central">Comisaría Central</option>
-            <option value="2da">Comisaría 2da</option>
-            <option value="3ra">Comisaría 3ra</option>
-            <option value="4ta">Comisaría 4ta</option>
+            <option value="comisaria central">Comisaría Central</option>
+            <option value="comisaria neuquen">Comisaría Neuquen</option>
+            <option value="comisaria n°41">Comisaría N°41</option>
+            <option value="comisaria N°17 La Sirena">Comisaría N°17 La Sirena</option>
+            <option value="comisaria N°21">Comisaría N°21</option>
+            <option value="comisaria n°3">Comisaría n°3</option>
+            <option value="comisaria N°44">Comisaría N°44</option>
+            <option value="comisaria N°18">Comisaría N°18</option> 
+            <option value="comisaria Barrio Islas Malvinas">Comisaría Barrio Islas Malvinas</option>
+
           </select>
           {errors.comisaria && <p className="text-red-600 text-sm mt-1">{errors.comisaria}</p>}
         </div>
