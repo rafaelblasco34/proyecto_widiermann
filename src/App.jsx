@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar.jsx";
 import Inicio from "./pages/Inicio.jsx";
 import Denuncias from "./pages/Denuncias.jsx";
+import Detalle from "./pages/Detalle.jsx";
 import Contacto from "./pages/Contacto.jsx";
 import Login from "./pages/Login.jsx";
 import Registro from "./pages/Registro.jsx";
@@ -29,6 +30,7 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Inicio />} />
             <Route path="/denuncias" element={<Denuncias />} />
+            <Route path="/denuncias/:id" element={<Detalle />} />
             <Route path="/contacto" element={<Contacto />} />
             <Route path="/login" element={<Login />} />
             <Route path="/registro" element={<Registro />} />

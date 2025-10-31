@@ -15,6 +15,7 @@ export default function NuevaDenuncia() {
   const [imagenes, setImagenes] = useState([]);
   const [imagenesSubiendo, setImagenesSubiendo] = useState([]);
   const [uploadProgress, setUploadProgress] = useState({}); // { nombreArchivo: porcentaje }
+  const [urlImagen, setUrlImagen] = useState(""); // URL de imagen desde Drive u otro servicio
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -62,22 +63,70 @@ export default function NuevaDenuncia() {
   const handleImagenChange = async (e) => {
     const archivos = Array.from(e.target.files);
     
+    if (archivos.length === 0) return;
+    
     for (const archivo of archivos) {
       if (archivo.size > 5 * 1024 * 1024) { 
         alert(`La imagen ${archivo.name} es muy grande. Máximo 5MB.`);
         continue;
       }
 
+      // Validar tipo de archivo
+      if (!archivo.type.startsWith('image/')) {
+        alert(`El archivo ${archivo.name} no es una imagen válida.`);
+        continue;
+      }
+
       setImagenesSubiendo(prev => [...prev, archivo.name]);
+      setUploadProgress(prev => ({ ...prev, [archivo.name]: 0 }));
       
       try {
+        console.log("Iniciando subida de imagen:", archivo.name);
         const imagenData = await subirImagenConProgreso(archivo, (percent) => {
+          console.log(`Progreso de ${archivo.name}: ${percent}%`);
           setUploadProgress(prev => ({ ...prev, [archivo.name]: percent }));
         });
+        
+        console.log("Imagen subida exitosamente:", imagenData);
         setImagenes(prev => [...prev, imagenData]);
+        
+        // Limpiar el input después de subir exitosamente
+        e.target.value = '';
       } catch (error) {
-        console.error("Error al subir imagen:", error);
-        alert(`Error al subir ${archivo.name}`);
+        console.error("Error completo al subir imagen:", error);
+        console.error("Error code:", error.code);
+        console.error("Error message:", error.message);
+        
+        let errorMessage = `Error al subir ${archivo.name}`;
+        
+        // Manejo de errores específicos de Firebase Storage
+        if (error.code) {
+          switch(error.code) {
+            case 'storage/unauthorized':
+              errorMessage = `❌ No tienes permiso para subir imágenes. Verifica las reglas de Firebase Storage en Firebase Console.`;
+              break;
+            case 'storage/quota-exceeded':
+              errorMessage = `❌ Se ha excedido la cuota de almacenamiento de Firebase.`;
+              break;
+            case 'storage/canceled':
+              errorMessage = `❌ La subida de ${archivo.name} fue cancelada.`;
+              break;
+            case 'storage/invalid-format':
+              errorMessage = `❌ El formato del archivo no es válido. Solo se permiten imágenes (jpg, png, gif, etc.).`;
+              break;
+            case 'storage/unauthenticated':
+              errorMessage = `❌ No estás autenticado. Por favor, inicia sesión.`;
+              break;
+            default:
+              errorMessage = `❌ Error ${error.code}: ${error.message || 'Error desconocido al subir la imagen'}`;
+          }
+        } else if (error.message) {
+          errorMessage = `❌ Error: ${error.message}`;
+        }
+        
+        console.error("Mensaje de error mostrado al usuario:", errorMessage);
+        alert(errorMessage);
+        setErrors({ general: errorMessage });
       } finally {
         setImagenesSubiendo(prev => prev.filter(nombre => nombre !== archivo.name));
         setUploadProgress(prev => {
@@ -90,6 +139,47 @@ export default function NuevaDenuncia() {
 
   const eliminarImagen = (index) => {
     setImagenes(prev => prev.filter((_, i) => i !== index));
+  };
+
+  // Convertir URL de Drive a formato directo
+  const convertirUrlDrive = (url) => {
+    // Si es un link de Drive compartido, convertir a formato de vista previa
+    if (url.includes('drive.google.com/file/d/')) {
+      const fileId = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/)?.[1];
+      if (fileId) {
+        return `https://drive.google.com/uc?export=view&id=${fileId}`;
+      }
+    }
+    // Si ya es una URL directa de imagen, devolverla tal cual
+    return url;
+  };
+
+  // Validar y agregar URL de imagen
+  const handleAgregarUrl = () => {
+    if (!urlImagen.trim()) {
+      setErrors({ ...errors, urlImagen: "Debes ingresar una URL válida" });
+      return;
+    }
+
+    // Validar que sea una URL válida
+    try {
+      const urlObj = new URL(urlImagen.trim());
+      const urlConvertida = convertirUrlDrive(urlImagen.trim());
+      
+      // Agregar la imagen usando la URL
+      const nuevaImagen = {
+        url: urlConvertida,
+        nombre: urlObj.pathname.split('/').pop() || 'imagen.jpg',
+        ruta: 'url-externa',
+        tipo: 'url'
+      };
+
+      setImagenes(prev => [...prev, nuevaImagen]);
+      setUrlImagen("");
+      setErrors({ ...errors, urlImagen: "" });
+    } catch (error) {
+      setErrors({ ...errors, urlImagen: "URL no válida. Asegúrate de incluir http:// o https://" });
+    }
   };
 
   const handleSubmit = async e => { 
@@ -230,16 +320,63 @@ export default function NuevaDenuncia() {
 
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Imágenes del incidente (máximo 5MB cada una)
+            Imágenes del incidente
           </label>
-          <input 
-            type="file" 
-            multiple 
-            accept="image/*"
-            onChange={handleImagenChange}
-            disabled={loading}
-            className="w-full border p-2 rounded-xl"
-          />
+          
+          {/* Opción 1: Subir archivos (si tienes Firebase Storage) */}
+          <div className="mb-4">
+            <p className="text-xs text-gray-500 mb-2">Opción 1: Subir archivos (máximo 5MB cada una)</p>
+            <input 
+              type="file" 
+              multiple 
+              accept="image/*"
+              onChange={handleImagenChange}
+              disabled={loading}
+              className="w-full border p-2 rounded-xl"
+            />
+          </div>
+          
+          {/* Opción 2: Pegar URL de Drive u otro servicio */}
+          <div className="mb-4">
+            <p className="text-xs text-gray-500 mb-2">
+              Opción 2: Pegar enlace de imagen (Drive, Imgur, etc.)
+            </p>
+            <div className="flex gap-2">
+              <input 
+                type="url" 
+                placeholder="https://drive.google.com/file/d/... o URL directa de imagen"
+                value={urlImagen}
+                onChange={(e) => {
+                  setUrlImagen(e.target.value);
+                  if (errors.urlImagen) {
+                    setErrors({ ...errors, urlImagen: "" });
+                  }
+                }}
+                disabled={loading}
+                className={`flex-1 input-field ${errors.urlImagen ? 'input-error' : ''}`}
+                onKeyPress={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault();
+                    handleAgregarUrl();
+                  }
+                }}
+              />
+              <button
+                type="button"
+                onClick={handleAgregarUrl}
+                disabled={loading || !urlImagen.trim()}
+                className="btn btn-primary px-4 py-2"
+              >
+                Agregar
+              </button>
+            </div>
+            {errors.urlImagen && (
+              <p className="text-red-600 text-sm mt-1">{errors.urlImagen}</p>
+            )}
+            <p className="text-xs text-gray-400 mt-1">
+              💡 Tip: En Google Drive, haz clic derecho en la imagen → "Obtener enlace" → copia y pega aquí
+            </p>
+          </div>
           
           {imagenesSubiendo.length > 0 && (
             <div className="mt-2 space-y-2">
@@ -262,24 +399,39 @@ export default function NuevaDenuncia() {
           )}
 
           {imagenes.length > 0 && (
-            <div className="mt-4 grid grid-cols-2 gap-2">
-              {imagenes.map((imagen, index) => (
-                <div key={index} className="relative">
-                  <img 
-                    src={imagen.url} 
-                    alt={`Imagen ${index + 1}`}
-                    className="w-full h-24 object-cover rounded border"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => eliminarImagen(index)}
-                    className="absolute top-1 right-1 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs"
-                    disabled={loading}
-                  >
-                    ×
-                  </button>
-                </div>
-              ))}
+            <div className="mt-4">
+              <p className="text-sm font-medium text-gray-700 mb-2">
+                Imágenes agregadas ({imagenes.length})
+              </p>
+              <div className="grid grid-cols-2 gap-2">
+                {imagenes.map((imagen, index) => (
+                  <div key={index} className="relative group">
+                    <img 
+                      src={imagen.url} 
+                      alt={`Imagen ${index + 1}`}
+                      className="w-full h-24 object-cover rounded border"
+                      onError={(e) => {
+                        e.target.src = 'https://via.placeholder.com/300x200?text=Imagen+no+disponible';
+                        console.error('Error cargando imagen:', imagen.url);
+                      }}
+                    />
+                    {imagen.tipo === 'url' && (
+                      <div className="absolute top-1 left-1 bg-blue-500 text-white text-xs px-2 py-1 rounded">
+                        URL
+                      </div>
+                    )}
+                    <button
+                      type="button"
+                      onClick={() => eliminarImagen(index)}
+                      className="absolute top-1 right-1 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-red-600 transition-colors"
+                      disabled={loading}
+                      title="Eliminar imagen"
+                    >
+                      ×
+                    </button>
+                  </div>
+                ))}
+              </div>
             </div>
           )}
         </div>

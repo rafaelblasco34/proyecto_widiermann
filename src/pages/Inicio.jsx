@@ -1,4 +1,4 @@
-import { FaExclamationTriangle, FaShieldAlt, FaBolt, FaCheckCircle, FaHome, FaEnvelope } from "react-icons/fa";
+import { FaExclamationTriangle, FaShieldAlt, FaBolt, FaCheckCircle, FaUserPlus, FaFileAlt, FaPaperPlane } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 export default function Inicio() {
@@ -9,37 +9,21 @@ export default function Inicio() {
       <div className="max-w-4xl mx-auto px-6 py-12 relative z-10">
         <div className="text-center mb-12">
           <div className="flex justify-center items-center gap-4 mb-6">
-            <img 
-              src="/descarga.jpeg" 
-              alt="Logo Policía Neuquén" 
-              className="h-24 w-auto object-contain"
-              onError={(e) => {
-                e.target.style.display = 'none';
-              }}
-            />
+            <div className="h-24 w-24 rounded-full overflow-hidden bg-white flex items-center justify-center border-2 border-primary/20 shadow-lg p-1">
+              <img 
+                src="/descarga.jpeg" 
+                alt="Logo Policía Neuquén" 
+                className="h-full w-full object-contain rounded-full"
+                style={{
+                  filter: 'brightness(1.05) saturate(1.1)',
+                  mixBlendMode: 'darken'
+                }}
+                onError={(e) => {
+                  e.target.style.display = 'none';
+                }}
+              />
+            </div>
             <h1 className="text-4xl font-bold text-primary mb-4 font-heading">DenunciasOnline</h1>
-          </div>
-          
-   
-          <div className="flex flex-wrap justify-center gap-6 mb-12 text-sm">
-            <Link to="/" className="flex items-center gap-1 text-primary hover:text-blue-900 font-body transition-colors">
-              <FaHome className="text-xs" />
-              Inicio
-            </Link>
-            <Link to="/denuncias" className="flex items-center gap-1 text-primary hover:text-blue-900 font-body transition-colors">
-              <FaExclamationTriangle className="text-xs" />
-              Denuncias
-            </Link>
-            <Link to="/contacto" className="flex items-center gap-1 text-primary hover:text-blue-900 font-body transition-colors">
-              <FaEnvelope className="text-xs" />
-              Contacto
-            </Link>
-            <Link to="/login" className="flex items-center gap-1 text-primary hover:text-blue-900 font-body transition-colors">
-              Ingresar
-            </Link>
-            <Link to="/registro" className="flex items-center gap-1 text-primary hover:text-blue-900 font-body transition-colors">
-              Crear cuenta
-            </Link>
           </div>
         </div>
 
@@ -110,13 +94,64 @@ export default function Inicio() {
           </div>
         </div>
         <div className="text-center">
-          <h3 className="text-xl font-bold text-primary mb-4 font-heading">¿Cómo Funciona?</h3>
-          <p className="text-gray-700 mb-8 font-body">Proceso simple y transparente en solo 3 pasos</p>
+          <h3 className="text-2xl font-bold text-primary mb-4 font-heading">¿Cómo Funciona?</h3>
+          <p className="text-gray-700 mb-12 font-body text-lg">Proceso simple y transparente en solo 3 pasos</p>
           
-          <div className="flex justify-center">
-            <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center text-black font-bold">
-              1
+          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            {/* Paso 1 */}
+            <div className="relative">
+              <div className="flex flex-col items-center">
+                <div className="w-16 h-16 bg-gradient-to-r from-primary to-primary-700 rounded-full flex items-center justify-center text-white font-bold text-xl mb-4 shadow-lg">
+                  <FaUserPlus className="text-2xl" />
+                </div>
+                <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-2">
+                  <span className="bg-policeYellow text-primary font-bold px-3 py-1 rounded-full text-sm">1</span>
+                </div>
+                <h4 className="text-lg font-bold text-primary mb-3 font-heading">Regístrate</h4>
+                <p className="text-gray-600 font-body text-sm leading-relaxed">
+                  Crea tu cuenta de forma rápida y segura. Solo necesitas tu nombre, email y un usuario.
+                </p>
+              </div>
             </div>
+
+            {/* Paso 2 */}
+            <div className="relative">
+              <div className="flex flex-col items-center">
+                <div className="w-16 h-16 bg-gradient-to-r from-primary to-primary-700 rounded-full flex items-center justify-center text-white font-bold text-xl mb-4 shadow-lg">
+                  <FaFileAlt className="text-2xl" />
+                </div>
+                <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-2">
+                  <span className="bg-policeYellow text-primary font-bold px-3 py-1 rounded-full text-sm">2</span>
+                </div>
+                <h4 className="text-lg font-bold text-primary mb-3 font-heading">Completa el Formulario</h4>
+                <p className="text-gray-600 font-body text-sm leading-relaxed">
+                  Describe el incidente, selecciona el tipo de denuncia, la ubicación y adjunta pruebas como imágenes o videos.
+                </p>
+              </div>
+            </div>
+
+            {/* Paso 3 */}
+            <div className="relative">
+              <div className="flex flex-col items-center">
+                <div className="w-16 h-16 bg-gradient-to-r from-primary to-primary-700 rounded-full flex items-center justify-center text-white font-bold text-xl mb-4 shadow-lg">
+                  <FaPaperPlane className="text-2xl" />
+                </div>
+                <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-2">
+                  <span className="bg-policeYellow text-primary font-bold px-3 py-1 rounded-full text-sm">3</span>
+                </div>
+                <h4 className="text-lg font-bold text-primary mb-3 font-heading">Envía tu Denuncia</h4>
+                <p className="text-gray-600 font-body text-sm leading-relaxed">
+                  Envía tu denuncia directamente a la comisaría seleccionada. Podrás hacer seguimiento de su estado en tiempo real.
+                </p>
+              </div>
+            </div>
+          </div>
+          
+          <div className="mt-12">
+            <Link to="/registro" className="btn btn-primary inline-flex items-center gap-2">
+              <FaUserPlus className="text-sm" />
+              Comenzar Ahora
+            </Link>
           </div>
         </div>
       </div>

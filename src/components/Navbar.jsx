@@ -17,14 +17,20 @@ export default function Navbar() {
       <nav className="max-w-6xl mx-auto px-4">
         <div className="flex items-center justify-between h-20">
           <Link to="/" className="flex items-center gap-3">
-            <img 
-              src="/descarga.jpeg" 
-              alt="Logo Policía Neuquén" 
-              className="h-16 w-auto object-contain drop-shadow-lg"
-              onError={(e) => {
-                e.target.style.display = 'none';
-              }}
-            />
+            <div className="h-16 w-16 rounded-full overflow-hidden bg-white flex items-center justify-center border-2 border-primary/20 shadow-lg p-1">
+              <img 
+                src="/descarga.jpeg" 
+                alt="Logo Policía Neuquén" 
+                className="h-full w-full object-contain rounded-full"
+                style={{
+                  filter: 'brightness(1.05) saturate(1.1)',
+                  mixBlendMode: 'darken'
+                }}
+                onError={(e) => {
+                  e.target.style.display = 'none';
+                }}
+              />
+            </div>
             <span className="text-2xl font-bold text-primary font-heading drop-shadow-sm">
               DenunciasOnline
             </span>

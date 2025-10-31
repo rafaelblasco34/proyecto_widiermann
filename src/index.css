@@ -75,4 +75,137 @@
     @apply px-4 py-2 rounded-lg font-semibold transition-all duration-300 ease-in-out;
     @apply shadow-md hover:shadow-lg active:scale-95;
   }
+  
+  /* Estilos para inputs y labels */
+  .input-field {
+    @apply w-full px-4 py-3 rounded-xl border-2 border-gray-200 bg-white;
+    @apply text-gray-800 placeholder-gray-400;
+    @apply transition-all duration-300 ease-in-out;
+    @apply focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/20;
+    @apply hover:border-gray-300 hover:shadow-md;
+    @apply disabled:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-60;
+    @apply shadow-sm;
+    font-family: 'Open Sans', sans-serif;
+  }
+  
+  .input-field::placeholder {
+    @apply text-gray-400;
+    font-style: italic;
+  }
+  
+  .input-field:focus {
+    @apply shadow-lg shadow-primary/10;
+    transform: translateY(-2px);
+    border-color: #0d2859;
+  }
+  
+  .input-field:hover:not(:focus):not(:disabled) {
+    @apply border-gray-300 shadow-md;
+  }
+  
+  .input-error {
+    @apply border-error focus:border-error focus:ring-error/20;
+    @apply shadow-sm shadow-error/10;
+  }
+  
+  .input-error:focus {
+    @apply shadow-lg shadow-error/20;
+  }
+  
+  /* Estilos para labels */
+  label {
+    @apply text-sm font-semibold text-gray-700 mb-2 block;
+    @apply transition-all duration-200;
+    @apply flex items-center gap-2;
+  }
+  
+  /* Labels con iconos */
+  label svg {
+    @apply transition-all duration-200;
+  }
+  
+  /* Label cuando el input está en focus */
+  .form-group:focus-within label,
+  .space-y-2:focus-within label {
+    @apply text-primary;
+  }
+  
+  .form-group:focus-within label svg,
+  .space-y-2:focus-within label svg {
+    @apply text-primary scale-110;
+  }
+  
+  .error-message {
+    @apply text-sm text-error mt-1 flex items-center gap-1;
+    @apply animate-pulse;
+  }
+  
+  .error-message::before {
+    content: "⚠";
+    @apply mr-1;
+  }
+  
+  textarea.input-field {
+    @apply resize-none;
+    min-height: 120px;
+  }
+  
+  select.input-field {
+    @apply cursor-pointer;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.75rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+    padding-right: 2.5rem;
+    appearance: none;
+  }
+  
+  select.input-field:focus {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%230d2859' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+  }
+  
+  /* Mejoras para contenedores de formularios */
+  .form-group {
+    @apply space-y-2;
+  }
+  
+  .form-group:focus-within label {
+    @apply text-primary;
+  }
+  
+  /* Estilos para badges de estado de denuncias */
+  .status-resolved {
+    @apply bg-green-100 text-green-800 border border-green-200;
+  }
+  
+  .status-in-progress {
+    @apply bg-yellow-100 text-yellow-800 border border-yellow-200;
+  }
+  
+  .status-investigation {
+    @apply bg-blue-100 text-blue-800 border border-blue-200;
+  }
+  
+  .status-pending {
+    @apply bg-gray-100 text-gray-800 border border-gray-200;
+  }
+  
+  /* Mejoras visuales para tarjetas */
+  .hover\:shadow-medium:hover {
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .gradient-text {
+    background: linear-gradient(135deg, #0d2859 0%, #2a5298 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
 }

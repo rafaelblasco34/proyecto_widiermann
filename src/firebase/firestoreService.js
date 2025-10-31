@@ -221,20 +221,62 @@ export const subirImagen = async (archivo, carpeta = 'denuncias') => {
 export const subirImagenConProgreso = (archivo, onProgress, carpeta = 'denuncias') => {
   return new Promise((resolve, reject) => {
     try {
-      const nombreArchivo = `${Date.now()}_${archivo.name}`;
+      // Validar que storage esté inicializado
+      if (!storage) {
+        reject(new Error('Firebase Storage no está inicializado. Verifica la configuración.'));
+        return;
+      }
+
+      // Limpiar y normalizar el nombre del archivo
+      // Eliminar tildes y caracteres especiales, mantener solo letras, números, puntos y guiones
+      const extension = archivo.name.split('.').pop().toLowerCase();
+      const nombreBase = archivo.name.substring(0, archivo.name.lastIndexOf('.')).replace(/[^a-zA-Z0-9]/g, '_');
+      // Limitar la longitud del nombre
+      const nombreCorto = nombreBase.length > 50 ? nombreBase.substring(0, 50) : nombreBase;
+      const nombreArchivo = `${Date.now()}_${nombreCorto}.${extension}`;
       const imagenRef = ref(storage, `${carpeta}/${nombreArchivo}`);
+      
+      console.log('Nombre original:', archivo.name);
+      console.log('Nombre procesado:', nombreArchivo);
+      console.log('Creando tarea de subida para:', nombreArchivo);
+      
       const task = uploadBytesResumable(imagenRef, archivo);
 
-      task.on('state_changed', (snapshot) => {
-        const percent = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-        if (typeof onProgress === 'function') onProgress(percent);
-      }, (error) => {
-        reject(error);
-      }, async () => {
-        const url = await getDownloadURL(task.snapshot.ref);
-        resolve({ nombre: nombreArchivo, url, ruta: task.snapshot.ref.fullPath });
-      });
+      task.on('state_changed', 
+        (snapshot) => {
+          // Progreso de la subida
+          const percent = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+          console.log(`Progreso: ${percent}% (${snapshot.bytesTransferred}/${snapshot.totalBytes} bytes)`);
+          if (typeof onProgress === 'function') {
+            onProgress(percent);
+          }
+        }, 
+        (error) => {
+          // Error durante la subida
+          console.error('Error en la subida:', error);
+          console.error('Error code:', error.code);
+          console.error('Error message:', error.message);
+          reject(error);
+        }, 
+        async () => {
+          // Subida completada exitosamente
+          try {
+            console.log('Subida completada, obteniendo URL...');
+            const url = await getDownloadURL(task.snapshot.ref);
+            console.log('URL obtenida:', url);
+            resolve({ 
+              nombre: nombreArchivo, 
+              url, 
+              ruta: task.snapshot.ref.fullPath 
+            });
+          } catch (urlError) {
+            console.error('Error obteniendo URL:', urlError);
+            reject(urlError);
+          }
+        }
+      );
     } catch (error) {
+      console.error('Error creando tarea de subida:', error);
       reject(error);
     }
   });

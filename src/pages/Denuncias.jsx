@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { obtenerDenuncias } from "../firebase/firestoreService.js";
-import { FaExclamationTriangle, FaClock, FaCheckCircle, FaSearch, FaFilter, FaPlus } from "react-icons/fa";
+import { FaExclamationTriangle, FaClock, FaCheckCircle, FaSearch, FaFilter, FaPlus, FaMapMarkerAlt, FaFileAlt, FaEye } from "react-icons/fa";
 
 export default function Denuncias() {
   const [denuncias, setDenuncias] = useState([]);
@@ -121,40 +121,128 @@ export default function Denuncias() {
           </div>
         </div>
 
-        <div className="space-y-4">
+        <div className="grid grid-cols-1 gap-6">
           {denuncias.map((denuncia, index) => (
             <div 
               key={denuncia.id} 
-              className="card hover:shadow-medium transition-all duration-300 cursor-pointer group"
-              style={{ animationDelay: `${index * 0.1}s` }}
+              className="card border-2 border-gray-100 hover:border-primary/30 transition-all duration-300 group overflow-hidden relative"
+              style={{ animationDelay: `${index * 0.05}s` }}
             >
-              <Link to={`/denuncias/${denuncia.id}`} className="block">
-                <div className="flex justify-between items-start">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-3">
-                      <h3 className="text-xl font-heading font-semibold text-gray-800 group-hover:text-primary-600 transition-colors">
-                        {denuncia.titulo}
-                      </h3>
-                      <span className={`${getEstadoColor(denuncia.estado)} flex items-center gap-2`}>
+              {/* Barra superior con gradiente según estado */}
+              <div className={`h-2 w-full absolute top-0 left-0 ${
+                denuncia.estado === "Resuelto" 
+                  ? "bg-gradient-to-r from-green-500 to-green-600"
+                  : denuncia.estado === "En proceso"
+                  ? "bg-gradient-to-r from-yellow-500 to-yellow-600"
+                  : denuncia.estado === "En investigación"
+                  ? "bg-gradient-to-r from-blue-500 to-blue-600"
+                  : "bg-gradient-to-r from-gray-400 to-gray-500"
+              }`}></div>
+              
+              <div className="pt-6">
+                <div className="flex flex-col md:flex-row gap-6">
+                  {/* Columna principal - Contenido */}
+                  <div className="flex-1 space-y-4">
+                    {/* Header con título y badge de estado */}
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-3 mb-2">
+                          <div className="w-14 h-14 rounded-xl overflow-hidden bg-white flex items-center justify-center border-2 border-primary/20 shadow-lg p-1 flex-shrink-0">
+                            <img 
+                              src="/descarga.jpeg" 
+                              alt="Logo Policía Neuquén" 
+                              className="h-full w-full object-contain rounded-xl"
+                              style={{
+                                filter: 'brightness(1.05) saturate(1.1)',
+                                mixBlendMode: 'darken'
+                              }}
+                              onError={(e) => {
+                                e.target.style.display = 'none';
+                              }}
+                            />
+                            {/* Fallback icon si el logo no carga */}
+                            <FaFileAlt className="absolute text-primary text-xl opacity-30" style={{ display: 'none' }} />
+                          </div>
+                          <div className="flex-1">
+                            <h3 className="text-xl font-heading font-bold text-gray-800 group-hover:text-primary-600 transition-colors mb-1">
+                              {denuncia.titulo || "Sin título"}
+                            </h3>
+                            <div className="flex items-center gap-2 text-sm text-gray-500">
+                              <FaClock className="text-xs" />
+                              <span>
+                                {denuncia.fecha 
+                                  ? (typeof denuncia.fecha === 'string' 
+                                      ? denuncia.fecha 
+                                      : new Date(denuncia.fecha.seconds * 1000).toLocaleDateString('es-AR'))
+                                  : denuncia.fechaCreacion 
+                                    ? (typeof denuncia.fechaCreacion === 'string'
+                                        ? denuncia.fechaCreacion
+                                        : new Date(denuncia.fechaCreacion.seconds * 1000).toLocaleDateString('es-AR'))
+                                    : "Fecha no disponible"}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      {/* Badge de estado */}
+                      <div className={`${getEstadoColor(denuncia.estado)} flex items-center gap-2 px-4 py-2 rounded-full shadow-md whitespace-nowrap`}>
                         {getEstadoIcon(denuncia.estado)}
-                        {denuncia.estado}
-                      </span>
+                        <span className="font-semibold text-sm">{denuncia.estado}</span>
+                      </div>
                     </div>
-                    <p className="text-gray-600 mb-3 leading-relaxed">
-                      {denuncia.descripcion}
-                    </p>
-                    <div className="flex items-center gap-4 text-sm text-gray-500">
-                      <span className="flex items-center gap-1">
-                        <FaClock className="text-xs" />
-                        {denuncia.fecha}
-                      </span>
-                      <span className="text-primary-600 font-medium group-hover:underline">
-                        Ver detalles →
-                      </span>
+                    
+                    {/* Descripción */}
+                    <div className="bg-gradient-to-r from-gray-50 to-gray-100 rounded-lg p-4 border-l-4 border-primary shadow-sm">
+                      <p className="text-gray-700 leading-relaxed line-clamp-3">
+                        {denuncia.descripcion || "Sin descripción disponible"}
+                      </p>
                     </div>
+                    
+                    {/* Información adicional */}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      {denuncia.tipo && (
+                        <div className="flex items-center gap-2 text-sm text-gray-600 bg-gray-50 px-3 py-2 rounded-lg">
+                          <FaExclamationTriangle className="text-primary-600" />
+                          <span className="font-medium">Tipo:</span>
+                          <span className="capitalize">{denuncia.tipo}</span>
+                        </div>
+                      )}
+                      {denuncia.ubicacion && (
+                        <div className="flex items-center gap-2 text-sm text-gray-600 bg-gray-50 px-3 py-2 rounded-lg">
+                          <FaMapMarkerAlt className="text-primary-600" />
+                          <span className="truncate">{denuncia.ubicacion}</span>
+                        </div>
+                      )}
+                      {denuncia.comisaria && (
+                        <div className="flex items-center gap-2 text-sm text-gray-600 bg-gray-50 px-3 py-2 rounded-lg">
+                          <FaCheckCircle className="text-primary-600" />
+                          <span className="truncate">{denuncia.comisaria}</span>
+                        </div>
+                      )}
+                    </div>
+                    
+                    {/* Indicador de imágenes */}
+                    {denuncia.imagenes && denuncia.imagenes.length > 0 && (
+                      <div className="flex items-center gap-2 text-sm text-gray-600">
+                        <FaFileAlt className="text-primary-600" />
+                        <span>{denuncia.imagenes.length} imagen{denuncia.imagenes.length !== 1 ? 'es' : ''} adjunta{denuncia.imagenes.length !== 1 ? 's' : ''}</span>
+                      </div>
+                    )}
+                  </div>
+                  
+                  {/* Columna lateral - Botón de acción */}
+                  <div className="flex md:flex-col items-center md:items-end justify-between md:justify-start gap-4 md:min-w-[160px] pt-2">
+                    <Link 
+                      to={`/denuncias/${denuncia.id}`}
+                      className="btn btn-primary flex items-center justify-center gap-2 px-6 py-3 text-base font-semibold text-white bg-[#0d2859] hover:bg-[#0a1f47] shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 whitespace-nowrap rounded-xl w-full md:w-auto"
+                    >
+                      <FaEye className="text-sm" />
+                      Ver Detalles
+                    </Link>
                   </div>
                 </div>
-              </Link>
+              </div>
             </div>
           ))}
         </div>

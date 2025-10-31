@@ -1,6 +1,6 @@
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { obtenerDenuncias } from "../firebase/firestoreService.js";
+import { obtenerDenuncia } from "../firebase/firestoreService.js";
 
 export default function Detalle() {
   const { id } = useParams();
@@ -11,19 +11,29 @@ export default function Detalle() {
 
   useEffect(() => {
     const cargarDenuncia = async () => {
+      if (!id) {
+        setError("ID de denuncia no proporcionado");
+        setLoading(false);
+        return;
+      }
+
       try {
         setLoading(true);
-        const denuncias = await obtenerDenuncias();
-        const denunciaEncontrada = denuncias.find((d) => d.id === parseInt(id));
-
-        if (denunciaEncontrada) {
-          setDenuncia(denunciaEncontrada);
+        setError(null);
+        
+        console.log("Cargando denuncia con ID:", id);
+        const denunciaData = await obtenerDenuncia(id);
+        
+        console.log("Denuncia cargada:", denunciaData);
+        
+        if (denunciaData) {
+          setDenuncia(denunciaData);
         } else {
           setError("Denuncia no encontrada");
         }
       } catch (err) {
-        setError("Error al cargar la denuncia");
-        console.error("Error:", err);
+        console.error("Error completo al cargar denuncia:", err);
+        setError(err.message || "Error al cargar la denuncia");
       } finally {
         setLoading(false);
       }
@@ -99,11 +109,42 @@ export default function Detalle() {
           <div className="grid md:grid-cols-2 gap-4 pt-4 border-t">
             <div>
               <p className="text-sm text-gray-500">Fecha de denuncia</p>
-              <p className="font-semibold">{denuncia.fecha}</p>
+              <p className="font-semibold">
+                {(() => {
+                  // Manejar diferentes formatos de fecha de Firestore
+                  let fecha = null;
+                  
+                  if (denuncia.fecha) {
+                    if (denuncia.fecha instanceof Date) {
+                      fecha = denuncia.fecha;
+                    } else if (typeof denuncia.fecha === 'string') {
+                      fecha = new Date(denuncia.fecha);
+                    } else if (denuncia.fecha.seconds) {
+                      fecha = new Date(denuncia.fecha.seconds * 1000);
+                    }
+                  } else if (denuncia.fechaCreacion) {
+                    if (denuncia.fechaCreacion instanceof Date) {
+                      fecha = denuncia.fechaCreacion;
+                    } else if (typeof denuncia.fechaCreacion === 'string') {
+                      fecha = new Date(denuncia.fechaCreacion);
+                    } else if (denuncia.fechaCreacion.seconds) {
+                      fecha = new Date(denuncia.fechaCreacion.seconds * 1000);
+                    }
+                  }
+                  
+                  return fecha ? fecha.toLocaleDateString('es-AR', { 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                  }) : "N/A";
+                })()}
+              </p>
             </div>
             <div>
               <p className="text-sm text-gray-500">Número de expediente</p>
-              <p className="font-semibold">{denuncia.numeroExpediente || "N/A"}</p>
+              <p className="font-semibold">{denuncia.numeroExpediente || denuncia.id || "N/A"}</p>
             </div>
             <div>
               <p className="text-sm text-gray-500">Comisaría</p>
