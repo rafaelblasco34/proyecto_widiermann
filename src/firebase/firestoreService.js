@@ -10,7 +10,7 @@ import {
   where,
   getDoc 
 } from 'firebase/firestore';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { ref, uploadBytes, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
 import { db, storage } from './config.js';
 
 export const obtenerDenuncias = async () => {
@@ -215,6 +215,29 @@ export const subirImagen = async (archivo, carpeta = 'denuncias') => {
     console.error('Error subiendo imagen:', error);
     throw error;
   }
+};
+
+// Subida con progreso, notifica porcentaje [0..100]
+export const subirImagenConProgreso = (archivo, onProgress, carpeta = 'denuncias') => {
+  return new Promise((resolve, reject) => {
+    try {
+      const nombreArchivo = `${Date.now()}_${archivo.name}`;
+      const imagenRef = ref(storage, `${carpeta}/${nombreArchivo}`);
+      const task = uploadBytesResumable(imagenRef, archivo);
+
+      task.on('state_changed', (snapshot) => {
+        const percent = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+        if (typeof onProgress === 'function') onProgress(percent);
+      }, (error) => {
+        reject(error);
+      }, async () => {
+        const url = await getDownloadURL(task.snapshot.ref);
+        resolve({ nombre: nombreArchivo, url, ruta: task.snapshot.ref.fullPath });
+      });
+    } catch (error) {
+      reject(error);
+    }
+  });
 };
 
 

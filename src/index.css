@@ -1,9 +1,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
 @layer base {
   body {
@@ -16,7 +13,7 @@
   }
 }
 
-@layer components {
+@layer components { 
   .btn {
     @apply px-6 py-3 rounded-lg font-semibold text-base transition-all duration-300 ease-in-out transform;
     @apply shadow-md hover:shadow-lg active:scale-95;
@@ -74,7 +71,6 @@
     color: #f4d03f !important;
   }
   
- 
   button:not(.btn):not([class*="absolute"]):not([class*="text-"]) {
     @apply px-4 py-2 rounded-lg font-semibold transition-all duration-300 ease-in-out;
     @apply shadow-md hover:shadow-lg active:scale-95;
