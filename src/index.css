@@ -1,3 +1,82 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-family: 'Bree Serif', serif;
+    color: #1f2937;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Times New Roman', serif;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply px-6 py-3 rounded-lg font-semibold text-base transition-all duration-300 ease-in-out transform;
+    @apply shadow-md hover:shadow-lg active:scale-95;
+    @apply border-2 border-transparent;
+    @apply focus:outline-none focus:ring-2 focus:ring-offset-2;
+  }
+  
+  .btn-primary {
+    @apply bg-[#0d2859] text-white hover:bg-[#0a1f47];
+    @apply focus:ring-[#0d2859];
+    @apply shadow-lg shadow-[#0d2859]/40;
+  }
+  
+  .btn-secondary {
+    @apply bg-secondary text-white hover:bg-gray-600;
+    @apply focus:ring-secondary;
+  }
+  
+  .btn-success {
+    @apply bg-success text-white hover:bg-green-600;
+    @apply focus:ring-success;
+  }
+  
+  .btn-warning {
+    @apply bg-warning text-white hover:bg-orange-600;
+    @apply focus:ring-warning;
+  }
+  
+  .btn-error {
+    @apply bg-error text-white hover:bg-red-600;
+    @apply focus:ring-error;
+  }
+  
+  .btn-outline {
+    @apply bg-transparent border-2 text-[#0d2859] border-[#0d2859] hover:bg-[#0d2859] hover:text-white;
+  }
+  
+  .bg-primary {
+    background-color: #0d2859 !important;
+  }
+  
+  .text-primary {
+    color: #0d2859 !important;
+  }
+  
+  .border-primary {
+    border-color: #0d2859 !important;
+  }
+  
+  .bg-policeYellow {
+    background-color: #f4d03f !important;
+  }
+  
+  .text-policeYellow {
+    color: #f4d03f !important;
+  }
+  
+ 
+  button:not(.btn):not([class*="absolute"]):not([class*="text-"]) {
+    @apply px-4 py-2 rounded-lg font-semibold transition-all duration-300 ease-in-out;
+    @apply shadow-md hover:shadow-lg active:scale-95;
+  }
+}
