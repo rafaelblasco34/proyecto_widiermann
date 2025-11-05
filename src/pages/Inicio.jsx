@@ -11,7 +11,7 @@ export default function Inicio() {
           <div className="flex justify-center items-center gap-4 mb-6">
             <div className="h-24 w-24 rounded-full overflow-hidden bg-white flex items-center justify-center border-2 border-primary/20 shadow-lg p-1">
               <img 
-                src="/descarga.jpeg" 
+                src={`${process.env.PUBLIC_URL || ''}/descarga.jpeg`}
                 alt="Logo Policía Neuquén" 
                 className="h-full w-full object-contain rounded-full"
                 style={{

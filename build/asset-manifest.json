@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/proyecto_widiermann/static/css/main.a5292b29.css",
+    "main.js": "/proyecto_widiermann/static/js/main.36f77edc.js",
+    "static/js/488.2e368374.chunk.js": "/proyecto_widiermann/static/js/488.2e368374.chunk.js",
+    "index.html": "/proyecto_widiermann/index.html",
+    "main.a5292b29.css.map": "/proyecto_widiermann/static/css/main.a5292b29.css.map",
+    "main.36f77edc.js.map": "/proyecto_widiermann/static/js/main.36f77edc.js.map",
+    "488.2e368374.chunk.js.map": "/proyecto_widiermann/static/js/488.2e368374.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.a5292b29.css",
+    "static/js/main.36f77edc.js"
+  ]
+}

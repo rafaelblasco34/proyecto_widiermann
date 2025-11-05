@@ -128,7 +128,6 @@ export default function Denuncias() {
               className="card border-2 border-gray-100 hover:border-primary/30 transition-all duration-300 group overflow-hidden relative"
               style={{ animationDelay: `${index * 0.05}s` }}
             >
-              {/* Barra superior con gradiente según estado */}
               <div className={`h-2 w-full absolute top-0 left-0 ${
                 denuncia.estado === "Resuelto" 
                   ? "bg-gradient-to-r from-green-500 to-green-600"
@@ -141,9 +140,7 @@ export default function Denuncias() {
               
               <div className="pt-6">
                 <div className="flex flex-col md:flex-row gap-6">
-                  {/* Columna principal - Contenido */}
                   <div className="flex-1 space-y-4">
-                    {/* Header con título y badge de estado */}
                     <div className="flex items-start justify-between gap-4">
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-2">

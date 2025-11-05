@@ -17,7 +17,7 @@ export default function App() {
         <div 
           className="fixed top-0 left-0 w-full h-full z-0 opacity-80 pointer-events-none"
           style={{
-            backgroundImage: 'url(/descarga.jpeg)',
+            backgroundImage: `url(${process.env.PUBLIC_URL || ''}/descarga.jpeg)`,
             backgroundSize: 'auto 60%',
             backgroundPosition: 'center center',
             backgroundRepeat: 'no-repeat',

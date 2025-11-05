@@ -19,7 +19,7 @@ export default function Navbar() {
           <Link to="/" className="flex items-center gap-3">
             <div className="h-16 w-16 rounded-full overflow-hidden bg-white flex items-center justify-center border-2 border-primary/20 shadow-lg p-1">
               <img 
-                src="/descarga.jpeg" 
+                src={`${process.env.PUBLIC_URL || ''}/descarga.jpeg`}
                 alt="Logo Policía Neuquén" 
                 className="h-full w-full object-contain rounded-full"
                 style={{

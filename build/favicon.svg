@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100">
+  <defs>
+    <clipPath id="circleClip">
+      <circle cx="50" cy="50" r="47"/>
+    </clipPath>
+  </defs>
+  <!-- Fondo circular -->
+  <circle cx="50" cy="50" r="48" fill="#0d2859" opacity="0.15"/>
+  <circle cx="50" cy="50" r="47" fill="#ffffff"/>
+  
+  <!-- Logo redondeado - usando path absoluto -->
+  <image 
+    href="./descarga.jpeg" 
+    x="3" 
+    y="3" 
+    width="94" 
+    height="94" 
+    clip-path="url(#circleClip)"
+    preserveAspectRatio="xMidYMid meet"
+  />
+</svg>
+
