@@ -38,8 +38,8 @@ export function AuthProvider({ children }) {
      cargarUsuarioGuardado();
   }, []);
 
-  const login = async (username, password) => {
-    try {
+  const login = async (username, password, rolSeleccionado) => {
+  try {
       setLoading(true);
       
   
@@ -55,14 +55,19 @@ export function AuthProvider({ children }) {
         if (!found) {
         throw new Error("Credenciales inválidas o usuario inactivo");
       }
-      
+
+       // Validar que el rol seleccionado coincida con el rol del usuario
+      const rolUsuario = found.rol || 'usuario';
+      if (rolSeleccionado && rolSeleccionado !== rolUsuario) {
+        throw new Error(`El rol seleccionado no coincide con el rol asignado. Su rol es: ${rolUsuario}`);
+      }
      
       const usuarioSesion = { 
         id: found.id,
         username: found.username, 
         nombre: found.nombre,
         email: found.email,
-        rol: found.rol || 'usuario'
+        rol: rolUsuario
       };
 
        setUser(usuarioSesion);
