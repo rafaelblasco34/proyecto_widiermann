@@ -7,8 +7,10 @@ import Contacto from "./pages/Contacto.jsx";
 import Login from "./pages/Login.jsx";
 import Registro from "./pages/Registro.jsx";
 import NuevaDenuncia from "./pages/NuevaDenuncia.jsx";
+import PanelAdmin from "./pages/PanelAdmin.jsx";
 import { AuthProvider } from "./auth/AuthContext.jsx";
 import ProtectedRoute from "./auth/ProtectedRoute.jsx";
+import AdminRoute from "./auth/AdminRoute.jsx";
 
 export default function App() {
   return (
@@ -37,6 +39,10 @@ export default function App() {
 
             <Route element={<ProtectedRoute />}>
               <Route path="/denuncias/nueva" element={<NuevaDenuncia />} />
+            </Route>
+            
+            <Route element={<AdminRoute />}>
+              <Route path="/panel" element={<PanelAdmin />} />
             </Route>
           </Routes>
         </div>
