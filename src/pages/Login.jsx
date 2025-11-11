@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext.jsx";
-import { FaUser, FaLock, FaSignInAlt, FaEye, FaEyeSlash } from "react-icons/fa";
+import { FaUser, FaLock, FaSignInAlt, FaEye, FaEyeSlash, FaUserShield } from "react-icons/fa";
 
 export default function Login() {
-  const [form, setForm] = useState({ username: "", password: "" });
+  const [form, setForm] = useState({ username: "", password: "", rol: "usuario" });
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -20,6 +20,10 @@ export default function Login() {
 
     if (!form.password) {
       newErrors.password = "La contraseña es obligatoria";
+    }
+
+       if (!form.rol) {
+      newErrors.rol = "Debe seleccionar un rol";
     }
 
     setErrors(newErrors);
@@ -43,7 +47,7 @@ export default function Login() {
     try {
       setLoading(true);
       setErrors({});
-      await login(form.username, form.password);
+      await login(form.username, form.password, form.rol);
       navigate("/");
     } catch (error) { 
       setErrors({ general: error.message });
@@ -119,6 +123,25 @@ export default function Login() {
             </div>
             {errors.password && <p className="error-message">{errors.password}</p>}
           </div>
+          
+           <div className="space-y-2">
+            <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
+              <FaUserShield className="text-primary-600" />
+              Rol
+            </label>
+            <select 
+              name="rol" 
+              className={`input-field ${errors.rol ? 'input-error' : ''}`}
+              value={form.rol} 
+              onChange={handleChange}
+              disabled={loading}
+            >
+              <option value="usuario">Usuario</option>
+              <option value="administrador">Administrador</option>
+            </select>
+            {errors.rol && <p className="error-message">{errors.rol}</p>}
+          </div>
+
 
           <button 
             className="btn btn-primary w-full text-lg py-4"
