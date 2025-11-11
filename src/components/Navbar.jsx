@@ -5,7 +5,9 @@ import {
   FaExclamationTriangle, 
   FaEnvelope, 
   FaSignInAlt, 
-  FaUserPlus
+   FaUserPlus,
+  FaUserShield,
+  FaSignOutAlt
 } from "react-icons/fa";
 
 export default function Navbar() {
@@ -41,6 +43,12 @@ export default function Navbar() {
               <FaHome className="text-xs" />
               Inicio
             </Link>
+            {user && user.rol === 'administrador' && (
+              <Link to="/panel" className="flex items-center gap-1 text-primary hover:text-blue-900 text-sm font-body transition-colors">
+                <FaUserShield className="text-xs" />
+                Panel
+              </Link>
+            )}
             <Link to="/denuncias" className="flex items-center gap-1 text-primary hover:text-blue-900 text-sm font-body transition-colors">
               <FaExclamationTriangle className="text-xs" />
               Denuncias
@@ -49,12 +57,29 @@ export default function Navbar() {
               <FaEnvelope className="text-xs" />
               Contacto
             </Link>
-            <Link to="/login" className="flex items-center gap-1 text-primary hover:text-blue-900 text-sm font-body transition-colors">
-              Ingresar
-            </Link>
-            <Link to="/registro" className="flex items-center gap-1 text-primary hover:text-blue-900 text-sm font-body transition-colors">
-              Crear cuenta
-            </Link>
+            {user ? (
+              <>
+                <span className="text-sm text-gray-600">
+                  {user.nombre || user.username}
+                </span>
+                <button
+                  onClick={logout}
+                  className="flex items-center gap-1 text-primary hover:text-blue-900 text-sm font-body transition-colors"
+                >
+                  <FaSignOutAlt className="text-xs" />
+                  Salir
+                </button>
+              </>
+            ) : (
+              <>
+                <Link to="/login" className="flex items-center gap-1 text-primary hover:text-blue-900 text-sm font-body transition-colors">
+                  Ingresar
+                </Link>
+                <Link to="/registro" className="flex items-center gap-1 text-primary hover:text-blue-900 text-sm font-body transition-colors">
+                  Crear cuenta
+                </Link>
+              </>
+            )}
           </div>
           
           <div className="md:hidden">
